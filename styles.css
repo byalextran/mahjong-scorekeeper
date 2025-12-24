@@ -460,9 +460,9 @@ header h1 {
 
 .kebab-dropdown {
     position: absolute;
-    bottom: 100%;
+    top: 100%;
     right: 0;
-    margin-bottom: 8px;
+    margin-top: 8px;
     background: var(--color-bg-card);
     border: 1px solid var(--color-border);
     border-radius: 12px;
@@ -770,6 +770,11 @@ header h1 {
     /* Make table-middle children participate in parent grid */
     .table-middle {
         display: contents;
+    }
+
+    /* Hide table center on mobile */
+    .table-center {
+        display: none;
     }
 
     /* Order: Player 1, 2, 3, 4 */
