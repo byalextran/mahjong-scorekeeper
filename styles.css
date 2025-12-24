@@ -774,6 +774,7 @@ header h1 {
         display: grid;
         grid-template-rows: auto auto auto auto;
         gap: 8px;
+        padding: 10px; /* Account for badges that extend outside cards */
     }
 
     /* Make table-middle children participate in parent grid */
@@ -813,6 +814,7 @@ header h1 {
     .player-name {
         grid-area: name;
         margin-bottom: 0;
+        min-width: 0; /* Required for text-overflow to work in CSS Grid */
     }
 
     .player-wind {
