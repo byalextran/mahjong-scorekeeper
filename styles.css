@@ -413,6 +413,7 @@ header h1 {
     display: flex;
     gap: 12px;
     align-items: stretch;
+    order: -1;
 }
 
 .add-score-btn {
@@ -717,9 +718,9 @@ header h1 {
     font-size: 0.9rem;
 }
 
-/* Roll Dice button - hidden on desktop, shown on mobile */
+/* Roll Dice button */
 .roll-dice-btn {
-    display: none;
+    display: block;
     padding: 14px 20px;
     border: 2px solid var(--color-border);
     border-radius: 12px;
@@ -749,7 +750,6 @@ header h1 {
     }
 
     .game-screen .action-row {
-        order: -1;
         margin-bottom: 16px;
         width: 100%;
     }
@@ -757,16 +757,6 @@ header h1 {
     /* Ensure Add Score button can shrink */
     .add-score-btn {
         min-width: 0;
-    }
-
-    /* Hide compass table-center (dice button) */
-    .table-center {
-        display: none !important;
-    }
-
-    /* Show Roll Dice button on mobile */
-    .roll-dice-btn {
-        display: block;
     }
 
     /* Stack player cards vertically using Grid for proper ordering */
