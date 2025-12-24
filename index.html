@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahjong Scorer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mahjong Scorer</h1>
+            <div id="game-info" class="game-info hidden">
+                <span id="game-display">Game 1</span>
+                <span id="wind-display">East Wind</span>
+            </div>
+        </header>
+
+        <!-- Player Setup Screen -->
+        <section id="setup-screen" class="setup-screen">
+            <h2>Enter Player Names</h2>
+            <p class="setup-hint">Seated as viewed from above the table</p>
+            <div class="table-layout">
+                <div class="input-group seat-top">
+                    <label for="player-3">North</label>
+                    <input type="text" id="player-3" placeholder="Player 4" tabindex="4">
+                </div>
+                <div class="table-middle">
+                    <div class="input-group seat-left">
+                        <label for="player-0">East (Dealer)</label>
+                        <input type="text" id="player-0" placeholder="Player 1" tabindex="1">
+                    </div>
+                    <div class="table-center"></div>
+                    <div class="input-group seat-right">
+                        <label for="player-2">West</label>
+                        <input type="text" id="player-2" placeholder="Player 3" tabindex="3">
+                    </div>
+                </div>
+                <div class="input-group seat-bottom">
+                    <label for="player-1">South</label>
+                    <input type="text" id="player-1" placeholder="Player 2" tabindex="2">
+                </div>
+            </div>
+            <div class="setup-buttons">
+                <button id="randomize-btn" class="btn btn-secondary">Randomize Seating</button>
+                <button id="start-game-btn" class="btn btn-primary">Start Game</button>
+            </div>
+        </section>
+
+        <!-- Game Board -->
+        <section id="game-screen" class="game-screen hidden">
+            <div class="table-layout">
+                <div class="player-card seat-top" data-player="3">
+                    <div class="player-name"></div>
+                    <div class="player-wind"></div>
+                    <div class="player-score"></div>
+                    <div class="dealer-badge hidden">Dealer</div>
+                    <div class="starting-dealer-badge hidden">SD</div>
+                </div>
+                <div class="table-middle">
+                    <div class="player-card seat-left" data-player="0">
+                        <div class="player-name"></div>
+                        <div class="player-wind"></div>
+                        <div class="player-score"></div>
+                        <div class="dealer-badge hidden">Dealer</div>
+                        <div class="starting-dealer-badge hidden">SD</div>
+                    </div>
+                    <div class="table-center"></div>
+                    <div class="player-card seat-right" data-player="2">
+                        <div class="player-name"></div>
+                        <div class="player-wind"></div>
+                        <div class="player-score"></div>
+                        <div class="dealer-badge hidden">Dealer</div>
+                        <div class="starting-dealer-badge hidden">SD</div>
+                    </div>
+                </div>
+                <div class="player-card seat-bottom" data-player="1">
+                    <div class="player-name"></div>
+                    <div class="player-wind"></div>
+                    <div class="player-score"></div>
+                    <div class="dealer-badge hidden">Dealer</div>
+                    <div class="starting-dealer-badge hidden">SD</div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button id="roll-dice-btn" class="btn btn-secondary">Roll Dice</button>
+                <button id="add-game-btn" class="btn btn-primary">+ Add Game</button>
+                <button id="history-btn" class="btn btn-secondary">History</button>
+                <button id="reset-btn" class="btn btn-danger">Reset</button>
+            </div>
+        </section>
+
+        <!-- Dice Modal -->
+        <div id="dice-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Roll Dice</h2>
+                <div class="dice-display">
+                    <div class="dice" id="die-1">-</div>
+                    <div class="dice" id="die-2">-</div>
+                    <div class="dice" id="die-3">-</div>
+                </div>
+                <div class="dice-total">Total: <span id="dice-total">-</span></div>
+                <div class="modal-buttons">
+                    <button id="reroll-dice-btn" class="btn btn-primary">Roll Again</button>
+                    <button id="close-dice-btn" class="btn btn-secondary">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Game Modal -->
+        <div id="game-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Record Game Result</h2>
+
+                <div class="form-group">
+                    <label for="winner-select">Winner</label>
+                    <select id="winner-select">
+                        <option value="">-- Select Winner --</option>
+                        <option value="tie">Tie / Draw (No Winner)</option>
+                    </select>
+                </div>
+
+                <div id="win-type-group" class="form-group hidden">
+                    <label>Win Type</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="win-type" value="self-drawn" checked>
+                            Self-Drawn
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="win-type" value="discard">
+                            Discard
+                        </label>
+                    </div>
+                </div>
+
+                <div id="discarder-group" class="form-group hidden">
+                    <label for="discarder-select">Who Discarded?</label>
+                    <select id="discarder-select">
+                        <option value="">-- Select Discarder --</option>
+                    </select>
+                </div>
+
+                <div id="points-group" class="form-group hidden">
+                    <label for="points-input">Faans</label>
+                    <input type="number" id="points-input" min="1" max="13" placeholder="Enter faans">
+                </div>
+
+                <div class="modal-buttons">
+                    <button id="cancel-game-btn" class="btn btn-secondary">Cancel</button>
+                    <button id="submit-game-btn" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Modal -->
+        <div id="history-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Score History</h2>
+                <div id="history-list" class="history-list">
+                    <p class="no-history">No games recorded yet.</p>
+                </div>
+                <div class="modal-buttons">
+                    <button id="close-history-btn" class="btn btn-secondary">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reset Confirmation Modal -->
+        <div id="reset-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Reset Game?</h2>
+                <p>This will clear all scores and start a new game. This cannot be undone.</p>
+                <div class="modal-buttons">
+                    <button id="cancel-reset-btn" class="btn btn-secondary">Cancel</button>
+                    <button id="confirm-reset-btn" class="btn btn-danger">Reset Game</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

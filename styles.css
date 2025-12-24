@@ -1,0 +1,477 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: #1a1a2e;
+    color: #eee;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    color: #e94560;
+    margin-bottom: 8px;
+}
+
+.game-info {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    font-size: 0.95rem;
+    color: #aaa;
+}
+
+.game-info span {
+    background: #16213e;
+    padding: 6px 12px;
+    border-radius: 4px;
+}
+
+/* Setup Screen */
+.setup-screen {
+    background: #16213e;
+    padding: 24px;
+    border-radius: 12px;
+}
+
+.setup-screen h2 {
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+}
+
+.setup-hint {
+    text-align: center;
+    color: #888;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+}
+
+.player-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+/* Table Layout */
+.table-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.table-middle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    justify-content: center;
+}
+
+.table-center {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(145deg, #2d4a3e, #1a3328);
+    border: 3px solid #4a7c6a;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+}
+
+.table-layout .seat-top,
+.table-layout .seat-bottom {
+    width: auto;
+}
+
+.table-layout .seat-left,
+.table-layout .seat-right {
+    width: 140px;
+}
+
+.table-layout .input-group {
+    width: 140px;
+}
+
+.table-layout .input-group input {
+    text-align: center;
+}
+
+.table-layout .player-card {
+    width: 140px;
+    padding: 12px;
+}
+
+.table-layout .player-card.seat-top,
+.table-layout .player-card.seat-bottom {
+    width: 140px;
+}
+
+.setup-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.setup-buttons .btn {
+    flex: 1;
+}
+
+.setup-buttons .btn-primary {
+    flex: 2;
+    width: auto;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    color: #aaa;
+}
+
+.input-group input {
+    padding: 12px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background: #0f0f23;
+    color: #eee;
+    font-size: 1rem;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #e94560;
+}
+
+/* Buttons */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background: #e94560;
+    color: white;
+    width: 100%;
+}
+
+.btn-secondary {
+    background: #333;
+    color: #eee;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+/* Game Screen */
+.game-screen {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.player-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.player-card {
+    background: #16213e;
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.player-card.is-dealer {
+    border-color: #e94560;
+}
+
+.player-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-wind {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.player-score {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.player-score.positive {
+    color: #28a745;
+}
+
+.player-score.negative {
+    color: #dc3545;
+}
+
+.dealer-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #e94560;
+    color: white;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.starting-dealer-badge {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    background: #f0a500;
+    color: #1a1a2e;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.action-buttons .btn {
+    flex: 1;
+    padding: 14px 12px;
+}
+
+.action-buttons .btn-primary {
+    flex: 2;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;
+}
+
+.modal-content {
+    background: #16213e;
+    padding: 24px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.form-group select,
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background: #0f0f23;
+    color: #eee;
+    font-size: 1rem;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+    outline: none;
+    border-color: #e94560;
+}
+
+.radio-group {
+    display: flex;
+    gap: 16px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    color: #eee;
+}
+
+.radio-label input {
+    accent-color: #e94560;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.modal-buttons .btn {
+    flex: 1;
+}
+
+/* History */
+.history-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.history-item {
+    background: #0f0f23;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.history-item:last-child {
+    margin-bottom: 0;
+}
+
+.history-game {
+    font-weight: 600;
+    color: #e94560;
+    margin-bottom: 4px;
+}
+
+.history-detail {
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.history-changes {
+    margin-top: 8px;
+    font-size: 0.85rem;
+}
+
+.history-change {
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 0;
+}
+
+.history-change .change-positive {
+    color: #28a745;
+}
+
+.history-change .change-negative {
+    color: #dc3545;
+}
+
+.no-history {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+}
+
+/* Reset modal text */
+.modal-content p {
+    color: #aaa;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+/* Dice */
+.dice-display {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.dice {
+    width: 60px;
+    height: 60px;
+    background: #0f0f23;
+    border: 2px solid #e94560;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #eee;
+}
+
+.dice-total {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #aaa;
+    margin-bottom: 16px;
+}
+
+.dice-total span {
+    font-weight: 700;
+    color: #e94560;
+    font-size: 1.5rem;
+}
