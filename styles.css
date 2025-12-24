@@ -716,3 +716,77 @@ header h1 {
     padding: 8px 16px;
     font-size: 0.9rem;
 }
+
+/* Roll Dice button - hidden on desktop, shown on mobile */
+.roll-dice-btn {
+    display: none;
+    padding: 14px 20px;
+    border: 2px solid var(--color-border);
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: var(--color-bg-card);
+    color: var(--color-text-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.roll-dice-btn:hover {
+    background: var(--color-bg-hover);
+}
+
+/* Desktop: show full labels, hide short */
+.btn-short {
+    display: none;
+}
+
+/* Mobile Responsive - Vertical Stack Layout */
+@media (max-width: 500px) {
+    /* Reorder: action-row at top */
+    .game-screen {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .game-screen .action-row {
+        order: -1;
+        margin-bottom: 16px;
+    }
+
+    /* Hide compass table-center (dice button) */
+    .table-center {
+        display: none;
+    }
+
+    /* Show Roll Dice button on mobile */
+    .roll-dice-btn {
+        display: block;
+    }
+
+    /* Stack player cards vertically */
+    .table-layout {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .table-middle {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* Full-width player cards */
+    .table-layout .player-card,
+    .table-layout .input-group {
+        width: 100%;
+        min-width: unset;
+    }
+
+    /* Swap button labels on mobile */
+    .btn-full {
+        display: none;
+    }
+
+    .btn-short {
+        display: inline;
+    }
+}

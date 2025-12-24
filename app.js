@@ -74,6 +74,7 @@ function setupEventListeners() {
 
     // Game screen
     document.getElementById('roll-dice-btn').addEventListener('click', showAndRollDice);
+    document.getElementById('roll-dice-action-btn').addEventListener('click', showAndRollDice);
     document.getElementById('add-game-btn').addEventListener('click', openGameModal);
     document.getElementById('history-btn').addEventListener('click', () => {
         closeKebabMenu();
