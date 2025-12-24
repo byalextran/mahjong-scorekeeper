@@ -3,19 +3,19 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Mahjong Scorer</title>
+        <title>Mahjong Scorekeeper</title>
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
-        <div class="container">
-            <header>
-                <h1>Mahjong Scorer</h1>
-                <div id="game-info" class="game-info hidden">
-                    <span id="wind-display">東 East</span>
-                    <span id="game-display">Game 1</span>
-                </div>
-            </header>
+        <header>
+            <h1>Mahjong Scorekeeper</h1>
+            <div id="game-info" class="game-info hidden">
+                <span id="wind-display">東 East</span>
+                <span id="game-display">Game 1</span>
+            </div>
+        </header>
 
+        <div class="container">
             <!-- Player Setup Screen -->
             <section id="setup-screen" class="setup-screen">
                 <h2>Enter Player Names</h2>
@@ -87,7 +87,12 @@
                         <div class="player-wind"></div>
                         <div class="player-score"></div>
                         <div class="dealer-badge hidden">Dealer</div>
-                        <div class="starting-dealer-badge hidden" title="Starting Dealer">SD</div>
+                        <div
+                            class="starting-dealer-badge hidden"
+                            title="Starting Dealer"
+                        >
+                            SD
+                        </div>
                     </div>
                     <div class="table-middle">
                         <div class="player-card seat-left" data-player="1">
@@ -95,17 +100,29 @@
                             <div class="player-wind"></div>
                             <div class="player-score"></div>
                             <div class="dealer-badge hidden">Dealer</div>
-                            <div class="starting-dealer-badge hidden" title="Starting Dealer">SD</div>
+                            <div
+                                class="starting-dealer-badge hidden"
+                                title="Starting Dealer"
+                            >
+                                SD
+                            </div>
                         </div>
                         <div class="table-center">
-                            <button id="roll-dice-btn" class="dice-btn">&#127922;</button>
+                            <button id="roll-dice-btn" class="dice-btn">
+                                &#127922;
+                            </button>
                         </div>
                         <div class="player-card seat-right" data-player="3">
                             <div class="player-name"></div>
                             <div class="player-wind"></div>
                             <div class="player-score"></div>
                             <div class="dealer-badge hidden">Dealer</div>
-                            <div class="starting-dealer-badge hidden" title="Starting Dealer">SD</div>
+                            <div
+                                class="starting-dealer-badge hidden"
+                                title="Starting Dealer"
+                            >
+                                SD
+                            </div>
                         </div>
                     </div>
                     <div class="player-card seat-bottom" data-player="2">
@@ -113,27 +130,44 @@
                         <div class="player-wind"></div>
                         <div class="player-score"></div>
                         <div class="dealer-badge hidden">Dealer</div>
-                        <div class="starting-dealer-badge hidden" title="Starting Dealer">SD</div>
-                    </div>
-                </div>
-
-                <div class="action-row">
-                    <button id="add-game-btn" class="add-score-btn">+ Add Score</button>
-                    <div class="kebab-menu-container">
-                        <button id="kebab-btn" class="kebab-btn">&#8942;</button>
-                        <div id="kebab-dropdown" class="kebab-dropdown hidden">
-                            <div id="history-btn" class="kebab-dropdown-item">View History</div>
-                            <div id="reset-btn" class="kebab-dropdown-item danger">Reset Game</div>
+                        <div
+                            class="starting-dealer-badge hidden"
+                            title="Starting Dealer"
+                        >
+                            SD
                         </div>
                     </div>
                 </div>
 
+                <div class="action-row">
+                    <button id="add-game-btn" class="add-score-btn">
+                        + Add Score
+                    </button>
+                    <div class="kebab-menu-container">
+                        <button id="kebab-btn" class="kebab-btn">
+                            &#8942;
+                        </button>
+                        <div id="kebab-dropdown" class="kebab-dropdown hidden">
+                            <div id="history-btn" class="kebab-dropdown-item">
+                                View History
+                            </div>
+                            <div
+                                id="reset-btn"
+                                class="kebab-dropdown-item danger"
+                            >
+                                Reset Game
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- Dice Modal -->
             <div id="dice-modal" class="modal hidden">
                 <div class="modal-content modal-closable">
-                    <button id="close-dice-x-btn" class="modal-close-btn">&times;</button>
+                    <button id="close-dice-x-btn" class="modal-close-btn">
+                        &times;
+                    </button>
                     <h2>Dice Roll</h2>
                     <div class="dice-container">
                         <div class="dice" id="die-1"></div>
@@ -144,8 +178,12 @@
                         Total: <span id="dice-total">-</span>
                     </div>
                     <div class="modal-buttons">
-                        <button id="reroll-dice-btn" class="btn btn-secondary">Roll Again</button>
-                        <button id="close-dice-btn" class="btn btn-primary">Close</button>
+                        <button id="reroll-dice-btn" class="btn btn-secondary">
+                            Roll Again
+                        </button>
+                        <button id="close-dice-btn" class="btn btn-primary">
+                            Close
+                        </button>
                     </div>
                 </div>
             </div>
@@ -218,7 +256,9 @@
             <!-- History Modal -->
             <div id="history-modal" class="modal hidden">
                 <div class="modal-content modal-closable">
-                    <button id="close-history-x-btn" class="modal-close-btn">&times;</button>
+                    <button id="close-history-x-btn" class="modal-close-btn">
+                        &times;
+                    </button>
                     <h2>Score History</h2>
                     <div id="history-list" class="history-list">
                         <p class="no-history">No games recorded yet.</p>
