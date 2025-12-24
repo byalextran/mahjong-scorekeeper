@@ -37,10 +37,12 @@ const gameDisplay = document.getElementById('game-display');
 const windDisplay = document.getElementById('wind-display');
 const playerCards = document.querySelectorAll('.player-card');
 
-const diceDisplay = document.getElementById('dice-display');
+const diceModal = document.getElementById('dice-modal');
 const gameModal = document.getElementById('game-modal');
 const historyModal = document.getElementById('history-modal');
 const resetModal = document.getElementById('reset-modal');
+const kebabBtn = document.getElementById('kebab-btn');
+const kebabDropdown = document.getElementById('kebab-dropdown');
 
 const winnerSelect = document.getElementById('winner-select');
 const winTypeGroup = document.getElementById('win-type-group');
@@ -73,11 +75,27 @@ function setupEventListeners() {
     // Game screen
     document.getElementById('roll-dice-btn').addEventListener('click', showAndRollDice);
     document.getElementById('add-game-btn').addEventListener('click', openGameModal);
-    document.getElementById('history-btn').addEventListener('click', openHistoryModal);
-    document.getElementById('reset-btn').addEventListener('click', openResetModal);
+    document.getElementById('history-btn').addEventListener('click', () => {
+        closeKebabMenu();
+        openHistoryModal();
+    });
+    document.getElementById('reset-btn').addEventListener('click', () => {
+        closeKebabMenu();
+        openResetModal();
+    });
 
-    // Dice inline display
-    document.getElementById('hide-dice-btn').addEventListener('click', hideDiceDisplay);
+    // Kebab menu
+    kebabBtn.addEventListener('click', toggleKebabMenu);
+    document.addEventListener('click', (e) => {
+        if (!kebabBtn.contains(e.target) && !kebabDropdown.contains(e.target)) {
+            closeKebabMenu();
+        }
+    });
+
+    // Dice modal
+    document.getElementById('close-dice-btn').addEventListener('click', closeDiceModal);
+    document.getElementById('close-dice-x-btn').addEventListener('click', closeDiceModal);
+    document.getElementById('reroll-dice-btn').addEventListener('click', rollDice);
 
     // Game modal
     document.getElementById('cancel-game-btn').addEventListener('click', closeGameModal);
@@ -89,6 +107,7 @@ function setupEventListeners() {
 
     // History modal
     document.getElementById('close-history-btn').addEventListener('click', closeHistoryModal);
+    document.getElementById('close-history-x-btn').addEventListener('click', closeHistoryModal);
 
     // Reset modal
     document.getElementById('cancel-reset-btn').addEventListener('click', closeResetModal);
@@ -195,11 +214,19 @@ function renderUI() {
 
 function showAndRollDice() {
     rollDice();
-    diceDisplay.classList.remove('hidden');
+    diceModal.classList.remove('hidden');
 }
 
-function hideDiceDisplay() {
-    diceDisplay.classList.add('hidden');
+function closeDiceModal() {
+    diceModal.classList.add('hidden');
+}
+
+function toggleKebabMenu() {
+    kebabDropdown.classList.toggle('hidden');
+}
+
+function closeKebabMenu() {
+    kebabDropdown.classList.add('hidden');
 }
 
 // Dot patterns for dice faces (3x3 grid positions: tl, tc, tr, ml, mc, mr, bl, bc, br)
@@ -310,7 +337,7 @@ function submitGame() {
     const faans = parseInt(pointsInput.value);
 
     // Validate faans
-    if (!faans || faans < 1) {
+    if (isNaN(faans) || faans < 0) {
         alert('Please enter valid faans.');
         return;
     }
@@ -412,7 +439,8 @@ function openHistoryModal() {
     if (gameState.history.length === 0) {
         historyList.innerHTML = '<p class="no-history">No games recorded yet.</p>';
     } else {
-        historyList.innerHTML = gameState.history.map(h => {
+        // Reverse to show latest game first
+        historyList.innerHTML = [...gameState.history].reverse().map(h => {
             let detail = '';
             if (h.winType === 'tie') {
                 detail = 'Tie / Draw';

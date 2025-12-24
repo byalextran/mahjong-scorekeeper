@@ -23,20 +23,21 @@ body {
 
 /* Header */
 header {
-    text-align: center;
-    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 36px;
 }
 
 header h1 {
     font-size: 1.8rem;
     color: #e94560;
-    margin-bottom: 8px;
+    margin: 0;
 }
 
 .game-info {
     display: flex;
-    justify-content: center;
-    gap: 16px;
+    gap: 12px;
     font-size: 0.95rem;
     color: #aaa;
 }
@@ -49,14 +50,12 @@ header h1 {
 
 /* Setup Screen */
 .setup-screen {
-    background: #16213e;
-    padding: 24px;
-    border-radius: 12px;
+    padding: 0;
 }
 
 .setup-screen h2 {
     text-align: center;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
     font-size: 1.2rem;
 }
 
@@ -85,20 +84,40 @@ header h1 {
 
 .table-middle {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     gap: 8px;
     width: 100%;
     justify-content: center;
 }
 
 .table-center {
-    width: 120px;
-    height: 120px;
+    width: 180px;
     background: linear-gradient(145deg, #2d4a3e, #1a3328);
     border: 3px solid #4a7c6a;
     border-radius: 8px;
     box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dice-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #333;
+    border: none;
+    color: #eee;
+    font-size: 2.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dice-btn:hover {
+    background: #444;
 }
 
 .table-layout .seat-top,
@@ -108,25 +127,47 @@ header h1 {
 
 .table-layout .seat-left,
 .table-layout .seat-right {
-    width: 140px;
+    width: 180px;
 }
 
 .table-layout .input-group {
-    width: 140px;
+    width: 180px;
+    background: #16213e;
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 2px solid transparent;
 }
 
 .table-layout .input-group input {
     text-align: center;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #333;
+    border-radius: 0;
+    padding: 8px 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.table-layout .input-group input::placeholder {
+    font-weight: 400;
+    color: #555;
+}
+
+.table-layout .input-group input:focus {
+    border-color: transparent;
+    border-bottom-color: #e94560;
 }
 
 .table-layout .player-card {
-    width: 140px;
-    padding: 12px;
+    min-width: 180px;
+    width: 180px;
+    padding: 16px 20px;
 }
 
 .table-layout .player-card.seat-top,
 .table-layout .player-card.seat-bottom {
-    width: 140px;
+    width: 180px;
 }
 
 .setup-buttons {
@@ -143,11 +184,12 @@ header h1 {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    text-align: center;
 }
 
 .input-group label {
-    font-size: 0.85rem;
-    color: #aaa;
+    font-size: 1rem;
+    color: #888;
 }
 
 .input-group input {
@@ -227,7 +269,7 @@ header h1 {
 
 .player-name {
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     margin-bottom: 4px;
     white-space: nowrap;
     overflow: hidden;
@@ -235,13 +277,13 @@ header h1 {
 }
 
 .player-wind {
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: #888;
     margin-bottom: 8px;
 }
 
 .player-score {
-    font-size: 1.5rem;
+    font-size: 2.2rem;
     font-weight: 700;
 }
 
@@ -275,21 +317,87 @@ header h1 {
     padding: 4px 8px;
     border-radius: 4px;
     font-weight: 600;
+    cursor: help;
 }
 
-/* Action Buttons */
-.action-buttons {
+/* Action Row */
+.action-row {
     display: flex;
-    gap: 8px;
+    gap: 12px;
+    align-items: stretch;
 }
 
-.action-buttons .btn {
+.add-score-btn {
     flex: 1;
-    padding: 14px 12px;
+    padding: 18px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: #e94560;
+    color: white;
 }
 
-.action-buttons .btn-primary {
-    flex: 2;
+.add-score-btn:hover {
+    opacity: 0.9;
+}
+
+/* Kebab menu */
+.kebab-menu-container {
+    position: relative;
+}
+
+.kebab-btn {
+    width: 56px;
+    height: 100%;
+    min-height: 56px;
+    border: none;
+    border-radius: 12px;
+    background: #16213e;
+    color: #aaa;
+    font-size: 1.6rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kebab-btn:hover {
+    background: #1a2a4e;
+    color: #eee;
+}
+
+.kebab-dropdown {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 8px;
+    background: #16213e;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    z-index: 50;
+}
+
+.kebab-dropdown-item {
+    padding: 14px 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+.kebab-dropdown-item:hover {
+    background: #0f0f23;
+}
+
+.kebab-dropdown-item.danger {
+    color: #dc3545;
+}
+
+.kebab-dropdown-item.danger:hover {
+    background: rgba(220, 53, 69, 0.1);
 }
 
 /* Modal */
@@ -320,6 +428,34 @@ header h1 {
 .modal-content h2 {
     margin-bottom: 20px;
     text-align: center;
+}
+
+.modal-closable {
+    position: relative;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    color: #888;
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.modal-close-btn:hover {
+    color: #eee;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .form-group {
@@ -379,7 +515,7 @@ header h1 {
 
 /* History */
 .history-list {
-    max-height: 300px;
+    max-height: calc(80vh - 150px);
     overflow-y: auto;
 }
 
@@ -437,38 +573,12 @@ header h1 {
     margin-bottom: 16px;
 }
 
-/* Dice Inline Display */
-.dice-inline {
-    background: #16213e;
-    border-radius: 12px;
-    padding: 16px;
-    margin-top: 16px;
-    text-align: center;
-    position: relative;
-}
-
-.dice-hide-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: transparent;
-    border: none;
-    color: #888;
-    font-size: 1.4rem;
-    cursor: pointer;
-    padding: 0;
-    line-height: 1;
-}
-
-.dice-hide-btn:hover {
-    color: #eee;
-}
-
+/* Dice Display */
 .dice-container {
     display: flex;
     justify-content: center;
-    gap: 12px;
-    margin-bottom: 12px;
+    gap: 16px;
+    margin-bottom: 16px;
 }
 
 .dice {
@@ -497,7 +607,8 @@ header h1 {
 .dice-total {
     font-size: 1.1rem;
     color: #aaa;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .dice-total span {
