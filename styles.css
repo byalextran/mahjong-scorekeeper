@@ -751,11 +751,17 @@ header h1 {
     .game-screen .action-row {
         order: -1;
         margin-bottom: 16px;
+        width: 100%;
+    }
+
+    /* Ensure Add Score button can shrink */
+    .add-score-btn {
+        min-width: 0;
     }
 
     /* Hide compass table-center (dice button) */
     .table-center {
-        display: none;
+        display: none !important;
     }
 
     /* Show Roll Dice button on mobile */
@@ -763,22 +769,61 @@ header h1 {
         display: block;
     }
 
-    /* Stack player cards vertically */
+    /* Stack player cards vertically using Grid for proper ordering */
     .table-layout {
-        flex-direction: column;
-        align-items: stretch;
+        display: grid;
+        grid-template-rows: auto auto auto auto;
+        gap: 8px;
     }
 
+    /* Make table-middle children participate in parent grid */
     .table-middle {
-        flex-direction: column;
-        align-items: stretch;
+        display: contents;
     }
 
-    /* Full-width player cards */
+    /* Order: Player 1, 2, 3, 4 */
+    .table-layout .seat-top { order: 1; }
+    .table-layout .seat-left { order: 2; }
+    .table-layout .seat-bottom { order: 3; }
+    .table-layout .seat-right { order: 4; }
+
+    /* Full-width player cards - override all fixed widths */
     .table-layout .player-card,
-    .table-layout .input-group {
-        width: 100%;
-        min-width: unset;
+    .table-layout .input-group,
+    .table-layout .seat-top,
+    .table-layout .seat-bottom,
+    .table-layout .seat-left,
+    .table-layout .seat-right {
+        width: 100% !important;
+        min-width: unset !important;
+    }
+
+    /* Horizontal card layout using CSS Grid */
+    .player-card {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "name score"
+            "wind score";
+        text-align: left;
+        padding: 12px 16px;
+        gap: 2px 16px;
+    }
+
+    .player-name {
+        grid-area: name;
+        margin-bottom: 0;
+    }
+
+    .player-wind {
+        grid-area: wind;
+        margin-bottom: 0;
+    }
+
+    .player-score {
+        grid-area: score;
+        align-self: center;
+        font-size: 1.8rem;
     }
 
     /* Swap button labels on mobile */
