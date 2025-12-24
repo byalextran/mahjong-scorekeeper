@@ -37,7 +37,7 @@ const gameDisplay = document.getElementById('game-display');
 const windDisplay = document.getElementById('wind-display');
 const playerCards = document.querySelectorAll('.player-card');
 
-const diceModal = document.getElementById('dice-modal');
+const diceDisplay = document.getElementById('dice-display');
 const gameModal = document.getElementById('game-modal');
 const historyModal = document.getElementById('history-modal');
 const resetModal = document.getElementById('reset-modal');
@@ -61,15 +61,23 @@ function setupEventListeners() {
     document.getElementById('start-game-btn').addEventListener('click', startGame);
     document.getElementById('randomize-btn').addEventListener('click', randomizeSeating);
 
+    // Enter key starts game from player inputs
+    for (let i = 0; i < 4; i++) {
+        document.getElementById(`player-${i}`).addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                startGame();
+            }
+        });
+    }
+
     // Game screen
-    document.getElementById('roll-dice-btn').addEventListener('click', openDiceModal);
+    document.getElementById('roll-dice-btn').addEventListener('click', showAndRollDice);
     document.getElementById('add-game-btn').addEventListener('click', openGameModal);
     document.getElementById('history-btn').addEventListener('click', openHistoryModal);
     document.getElementById('reset-btn').addEventListener('click', openResetModal);
 
-    // Dice modal
-    document.getElementById('reroll-dice-btn').addEventListener('click', rollDice);
-    document.getElementById('close-dice-btn').addEventListener('click', closeDiceModal);
+    // Dice inline display
+    document.getElementById('hide-dice-btn').addEventListener('click', hideDiceDisplay);
 
     // Game modal
     document.getElementById('cancel-game-btn').addEventListener('click', closeGameModal);
@@ -154,7 +162,7 @@ function renderUI() {
 
     // Update header
     gameDisplay.textContent = `Game ${gameState.roundNumber}`;
-    windDisplay.textContent = `${WINDS[gameState.prevailingWind]} Wind`;
+    windDisplay.textContent = `${WIND_CHARS[gameState.prevailingWind]} ${WINDS[gameState.prevailingWind]}`;
 
     // Update player cards
     playerCards.forEach((card) => {
@@ -185,13 +193,33 @@ function renderUI() {
     });
 }
 
-function openDiceModal() {
+function showAndRollDice() {
     rollDice();
-    diceModal.classList.remove('hidden');
+    diceDisplay.classList.remove('hidden');
 }
 
-function closeDiceModal() {
-    diceModal.classList.add('hidden');
+function hideDiceDisplay() {
+    diceDisplay.classList.add('hidden');
+}
+
+// Dot patterns for dice faces (3x3 grid positions: tl, tc, tr, ml, mc, mr, bl, bc, br)
+const DICE_PATTERNS = {
+    1: [false, false, false, false, true, false, false, false, false],
+    2: [true, false, false, false, false, false, false, false, true],
+    3: [true, false, false, false, true, false, false, false, true],
+    4: [true, false, true, false, false, false, true, false, true],
+    5: [true, false, true, false, true, false, true, false, true],
+    6: [true, false, true, true, false, true, true, false, true]
+};
+
+function renderDie(element, value) {
+    const pattern = DICE_PATTERNS[value];
+    element.innerHTML = '';
+    pattern.forEach((show, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'die-dot' + (show ? ' visible' : '');
+        element.appendChild(dot);
+    });
 }
 
 function rollDice() {
@@ -200,9 +228,9 @@ function rollDice() {
     const die3 = Math.floor(Math.random() * 6) + 1;
     const total = die1 + die2 + die3;
 
-    document.getElementById('die-1').textContent = die1;
-    document.getElementById('die-2').textContent = die2;
-    document.getElementById('die-3').textContent = die3;
+    renderDie(document.getElementById('die-1'), die1);
+    renderDie(document.getElementById('die-2'), die2);
+    renderDie(document.getElementById('die-3'), die3);
     document.getElementById('dice-total').textContent = total;
 }
 
@@ -437,6 +465,9 @@ function confirmReset() {
     setupScreen.classList.remove('hidden');
     gameScreen.classList.add('hidden');
     gameInfo.classList.add('hidden');
+
+    // Focus player 1 input
+    document.getElementById('player-0').focus();
 
     closeResetModal();
 }
