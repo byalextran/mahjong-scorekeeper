@@ -12,6 +12,7 @@
             <div id="game-info" class="game-info hidden">
                 <span id="wind-display">東 East</span>
                 <span id="game-display">Game 1</span>
+                <span id="scoring-display"></span>
             </div>
         </header>
 
@@ -59,6 +60,28 @@
                             tabindex="3"
                         />
                         <label for="player-2">西 West</label>
+                    </div>
+                </div>
+                <div class="form-group scoring-variation-group">
+                    <span class="form-label">Discard Scoring</span>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input
+                                type="radio"
+                                name="scoring-variation"
+                                value="full"
+                                checked
+                            />
+                            全銃 Full Gun
+                        </label>
+                        <label class="radio-label">
+                            <input
+                                type="radio"
+                                name="scoring-variation"
+                                value="half"
+                            />
+                            半銃 Shared Gun
+                        </label>
                     </div>
                 </div>
                 <div class="setup-buttons">

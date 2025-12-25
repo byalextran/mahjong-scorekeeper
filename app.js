@@ -130,6 +130,10 @@ function loadFromLocalStorage() {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (saved) {
     gameState = JSON.parse(saved);
+    // Backward compatibility: default to 'full' if not set
+    if (!gameState.scoringVariation) {
+      gameState.scoringVariation = 'full';
+    }
     showGameScreen();
     renderUI();
   }
@@ -174,6 +178,8 @@ function startGame() {
     names.push(name);
   }
 
+  const scoringVariation = document.querySelector('input[name="scoring-variation"]:checked').value;
+
   gameState = {
     players: names.map(name => ({ name, score: STARTING_SCORE })),
     dealerIndex: 0,
@@ -181,7 +187,8 @@ function startGame() {
     roundNumber: 1,
     prevailingWind: 0,
     dealerRotations: 0,
-    history: []
+    history: [],
+    scoringVariation
   };
 
   saveToLocalStorage();
@@ -201,6 +208,8 @@ function renderUI() {
   // Update header
   gameDisplay.textContent = `Game ${gameState.roundNumber}`;
   windDisplay.textContent = `${WIND_CHARS[gameState.prevailingWind]} ${WINDS[gameState.prevailingWind]}`;
+  document.getElementById('scoring-display').textContent =
+    gameState.scoringVariation === 'half' ? '半銃 Shared Gun' : '全銃 Full Gun';
 
   // Update player cards
   playerCards.forEach((card) => {
@@ -393,11 +402,31 @@ function processWin(winnerIndex, winType, discarderIndex, points, faans) {
       }
     });
   } else {
-    // Only discarder pays
-    gameState.players[winnerIndex].score += points;
-    gameState.players[discarderIndex].score -= points;
-    changes.push({ playerIndex: winnerIndex, change: points });
-    changes.push({ playerIndex: discarderIndex, change: -points });
+    // Discard win
+    if (gameState.scoringVariation === 'half') {
+      // 半銃: Discarder pays half, others pay quarter each
+      const discarderPays = points / 2;
+      const otherPay = points / 4;
+
+      gameState.players.forEach((player, index) => {
+        if (index === winnerIndex) {
+          player.score += points;
+          changes.push({ playerIndex: index, change: points });
+        } else if (index === discarderIndex) {
+          player.score -= discarderPays;
+          changes.push({ playerIndex: index, change: -discarderPays });
+        } else {
+          player.score -= otherPay;
+          changes.push({ playerIndex: index, change: -otherPay });
+        }
+      });
+    } else {
+      // 全銃: Only discarder pays (default)
+      gameState.players[winnerIndex].score += points;
+      gameState.players[discarderIndex].score -= points;
+      changes.push({ playerIndex: winnerIndex, change: points });
+      changes.push({ playerIndex: discarderIndex, change: -points });
+    }
   }
 
   // Record history

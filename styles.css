@@ -248,6 +248,40 @@ header h1 {
     width: 180px;
 }
 
+/* Scoring Variation Selector */
+.scoring-variation-group {
+    background: var(--color-bg-card);
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 2px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    margin-top: 16px;
+    text-align: center;
+}
+
+.scoring-variation-group.form-group .form-label {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-bottom: 16px;
+}
+
+.scoring-variation-group .radio-group {
+    justify-content: center;
+    gap: 24px;
+}
+
+.scoring-variation-group .radio-label {
+    font-size: 1.1rem;
+    font-weight: 500;
+    gap: 8px;
+}
+
+.scoring-variation-group .radio-label input[type="radio"] {
+    width: 18px;
+    height: 18px;
+}
+
 .setup-buttons {
     display: flex;
     gap: 12px;
@@ -888,5 +922,19 @@ header h1 {
 
     .btn-short {
         display: inline;
+    }
+
+    /* Scoring variation on mobile */
+    .scoring-variation-group {
+        padding: 12px 16px;
+    }
+
+    .scoring-variation-group.form-group .form-label {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+
+    .scoring-variation-group .radio-label {
+        font-size: 1rem;
     }
 }
