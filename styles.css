@@ -573,7 +573,8 @@ header h1 {
     margin-bottom: 16px;
 }
 
-.form-group label {
+.form-group label,
+.form-group .form-label {
     display: block;
     margin-bottom: 6px;
     font-size: 0.9rem;
