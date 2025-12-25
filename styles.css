@@ -257,6 +257,10 @@ header h1 {
 .setup-buttons .btn {
     flex: 1;
     white-space: nowrap;
+    padding: 18px 24px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 12px;
 }
 
 .input-group {
@@ -816,6 +820,16 @@ header h1 {
     .table-layout .seat-right {
         width: 100% !important;
         min-width: unset !important;
+    }
+
+    /* Compact input cards on mobile */
+    .table-layout .input-group {
+        padding: 10px 16px;
+    }
+
+    .table-layout .input-group input {
+        padding: 4px 0;
+        font-size: 1.2rem;
     }
 
     /* Horizontal card layout using CSS Grid */
