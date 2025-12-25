@@ -256,6 +256,7 @@ header h1 {
 
 .setup-buttons .btn {
     flex: 1;
+    min-width: 0;
     white-space: nowrap;
     padding: 18px 24px;
     font-size: 1.2rem;
@@ -825,6 +826,11 @@ header h1 {
     /* Compact input cards on mobile */
     .table-layout .input-group {
         padding: 10px 16px;
+    }
+
+    .setup-buttons .btn {
+        padding: 14px 16px;
+        font-size: 1rem;
     }
 
     .table-layout .input-group input {
