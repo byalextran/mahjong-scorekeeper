@@ -155,7 +155,6 @@ header h1 {
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    margin-bottom: 24px;
 }
 
 .table-middle {
@@ -431,8 +430,7 @@ header h1 {
     display: flex;
     gap: 12px;
     align-items: stretch;
-    order: -1;
-    margin-bottom: 16px;
+    margin-top: 24px;
 }
 
 .add-score-btn {
@@ -780,7 +778,7 @@ header h1 {
     }
 
     .game-screen .action-row {
-        margin-bottom: 16px;
+        margin-top: 16px;
         width: 100%;
     }
 
