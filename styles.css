@@ -745,6 +745,16 @@ header h1 {
 /* Mobile Responsive - Vertical Stack Layout */
 @media (max-width: 500px) {
 
+    /* Header wraps to two lines */
+    header {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    header h1 {
+        width: 100%;
+    }
+
     /* Reorder: action-row at top */
     .game-screen {
         display: flex;
