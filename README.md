@@ -12,9 +12,15 @@ A web app for scorekeeping Cantonese/Hong Kong-style Mahjong games with support 
 - Dice rolling
 - Browser storage for game data
  
-It uses this faan-to-points conversion table: 
+## Scoring
 
-| Faan | Self-Draw | Discard |
+Points are determined by faan count (see Faan-to-points table below). Points are paid depending on win type:
+
+- **Self-drawn**: Each of the three losers pays the self-draw amount to the winner.
+- **Discard (Full Gun)**: The discarder pays the full discard amount.
+- **Discard (Shared Gun)**: The discarder pays half. the other two players split the remaining half.
+
+| Faan | Self-Drawn | Discard |
 |------|------------|---------|
 | 1    | 2          | 4       |
 | 2    | 4          | 8       |
