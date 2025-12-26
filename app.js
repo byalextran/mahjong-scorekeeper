@@ -489,26 +489,34 @@ function openHistoryModal() {
   } else {
     // Reverse to show latest game first
     historyList.innerHTML = [...gameState.history].reverse().map(h => {
-      let detail = '';
-      if (h.winType === 'tie') {
-        detail = 'Tie (No Winner)';
-      } else if (h.winType === 'self-drawn') {
-        detail = `${h.winner} won (Self-Drawn) - ${h.faans || '?'} faan (${h.points} pts each)`;
-      } else {
-        detail = `${h.winner} won from ${h.discarder} - ${h.faans || '?'} faan (${h.points} pts)`;
-      }
+      let headerRight = '';
+      let bodyContent = '';
 
-      const changesHtml = h.changes.map(c => {
-        const cls = c.change > 0 ? 'change-positive' : 'change-negative';
-        const sign = c.change > 0 ? '+' : '';
-        return `<div class="history-change"><span>${c.name}</span><span class="${cls}">${sign}${c.change}</span></div>`;
-      }).join('');
+      if (h.winType === 'tie') {
+        headerRight = '<span class="winner-faan"><span class="tie-text">Tie</span></span>';
+        bodyContent = '<div class="tie-text" style="font-size: 0.85rem;">No score changes</div>';
+      } else {
+        const faanText = h.faans ? `${h.faans} faan` : '';
+        headerRight = `<span class="winner-faan"><span class="winner-name">${h.winner}</span><span class="faan-count">${faanText}</span></span>`;
+
+        const changesHtml = h.changes.map(c => {
+          const cls = c.change > 0 ? 'change-positive' : 'change-negative';
+          const sign = c.change > 0 ? '+' : '';
+          return `<div class="history-change"><span>${c.name}</span><span class="${cls}">${sign}${c.change}</span></div>`;
+        }).join('');
+
+        bodyContent = changesHtml ? `<div class="history-changes">${changesHtml}</div>` : '';
+      }
 
       return `
                 <div class="history-item">
-                    <div class="history-game">Game ${h.game || h.round}</div>
-                    <div class="history-detail">${detail}</div>
-                    ${changesHtml ? `<div class="history-changes">${changesHtml}</div>` : ''}
+                    <div class="card-header">
+                        <span class="history-game">Game ${h.game || h.round}</span>
+                        ${headerRight}
+                    </div>
+                    <div class="card-body">
+                        ${bodyContent}
+                    </div>
                 </div>
             `;
     }).join('');
