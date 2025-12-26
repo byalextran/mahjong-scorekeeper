@@ -530,6 +530,98 @@
             padding: 2px 0;
         }
 
+        /* Option L: Header + Winner/Faan inline + Current Breakdown */
+        .option-l .history-item {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .option-l .card-header {
+            padding: 8px 12px;
+            background: rgba(21, 101, 192, 0.1);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .option-l .card-header .history-game {
+            margin-bottom: 0;
+        }
+
+        .option-l .card-body {
+            padding: 12px;
+        }
+
+        .option-l .winner-line {
+            margin-bottom: 8px;
+        }
+
+        .option-l .winner-name {
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .option-l .faan-count {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            margin-left: 6px;
+        }
+
+        .option-l .history-changes {
+            font-size: 0.85rem;
+        }
+
+        .option-l .history-change {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+        }
+
+        /* Option M: Header with Winner/Faan right-aligned, no unchanged scores */
+        .option-m .history-item {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .option-m .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: rgba(21, 101, 192, 0.1);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .option-m .card-header .history-game {
+            margin-bottom: 0;
+        }
+
+        .option-m .winner-faan {
+            font-size: 0.9rem;
+        }
+
+        .option-m .winner-name {
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .option-m .faan-count {
+            color: var(--color-text-muted);
+            margin-left: 6px;
+        }
+
+        .option-m .card-body {
+            padding: 12px;
+        }
+
+        .option-m .history-changes {
+            font-size: 0.85rem;
+        }
+
+        .option-m .history-change {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+        }
+
         /* Notes section */
         .notes {
             margin-top: 30px;
@@ -963,6 +1055,101 @@
                 <div class="tie-text" style="padding: 8px 0;">Tie (No Winner)</div>
             </div>
         </div>
+
+        <!-- Option L: Header + Winner/Faan inline + Current Breakdown -->
+        <div class="mockup-section option-l">
+            <h2>Option L: Header + Inline Winner/Faan</h2>
+            <div class="history-item">
+                <div class="card-header">
+                    <span class="history-game">Game 5</span>
+                </div>
+                <div class="card-body">
+                    <div class="winner-line">
+                        <span class="winner-name">John</span>
+                        <span class="faan-count">· 3 faan</span>
+                    </div>
+                    <div class="history-changes">
+                        <div class="history-change"><span>John</span><span class="change-positive">+48</span></div>
+                        <div class="history-change"><span>Mary</span><span class="change-negative">-48</span></div>
+                        <div class="history-change"><span>Bob</span><span>—</span></div>
+                        <div class="history-change"><span>Alice</span><span>—</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="card-header">
+                    <span class="history-game">Game 4</span>
+                </div>
+                <div class="card-body">
+                    <div class="winner-line">
+                        <span class="winner-name">Alice</span>
+                        <span class="faan-count">· 5 faan</span>
+                    </div>
+                    <div class="history-changes">
+                        <div class="history-change"><span>John</span><span class="change-negative">-32</span></div>
+                        <div class="history-change"><span>Mary</span><span class="change-negative">-32</span></div>
+                        <div class="history-change"><span>Bob</span><span class="change-negative">-32</span></div>
+                        <div class="history-change"><span>Alice</span><span class="change-positive">+96</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="card-header">
+                    <span class="history-game">Game 3</span>
+                </div>
+                <div class="card-body">
+                    <div class="tie-text">Tie (No Winner)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option M: Winner/Faan in header right-aligned, only show changed scores -->
+        <div class="mockup-section option-m">
+            <h2>Option M: Header with Winner Right-Aligned</h2>
+            <div class="history-item">
+                <div class="card-header">
+                    <span class="history-game">Game 5</span>
+                    <span class="winner-faan">
+                        <span class="winner-name">John</span>
+                        <span class="faan-count">3 faan</span>
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="history-changes">
+                        <div class="history-change"><span>John</span><span class="change-positive">+48</span></div>
+                        <div class="history-change"><span>Mary</span><span class="change-negative">-48</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="card-header">
+                    <span class="history-game">Game 4</span>
+                    <span class="winner-faan">
+                        <span class="winner-name">Alice</span>
+                        <span class="faan-count">5 faan</span>
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="history-changes">
+                        <div class="history-change"><span>John</span><span class="change-negative">-32</span></div>
+                        <div class="history-change"><span>Mary</span><span class="change-negative">-32</span></div>
+                        <div class="history-change"><span>Bob</span><span class="change-negative">-32</span></div>
+                        <div class="history-change"><span>Alice</span><span class="change-positive">+96</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="card-header">
+                    <span class="history-game">Game 3</span>
+                    <span class="winner-faan">
+                        <span class="tie-text">Tie</span>
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="tie-text" style="font-size: 0.85rem;">No score changes</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="notes">
@@ -978,6 +1165,8 @@
             <li><strong>Option I</strong> - Centered winner with divider; 4-column score grid (compact)</li>
             <li><strong>Option J</strong> - Left-aligned list style; vertical score breakdown with subtle dividers</li>
             <li><strong>Option K</strong> - Two-column split: winner/faans on left, scores on right</li>
+            <li><strong>Option L</strong> - Blue header bar (from C) + winner/faan inline + current vertical breakdown style</li>
+            <li><strong>Option M</strong> - Winner/faan right-aligned in header; only shows players with score changes</li>
         </ul>
     </div>
 </body>
