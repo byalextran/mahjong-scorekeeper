@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0">
+    <title>Game History Display Mockups</title>
+    <style>
+        :root {
+            --mj-bamboo-light: #F5F3E8;
+            --mj-blue: #1565C0;
+            --color-bg-input: #FAF8F0;
+            --color-border: #D4C5A9;
+            --color-text: #1A1814;
+            --color-text-secondary: #5C5346;
+            --color-text-muted: #8B7355;
+            --color-score-positive: #228B22;
+            --color-score-negative: #B22222;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #E8E4D9;
+            padding: 20px;
+            color: var(--color-text);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--mj-blue);
+        }
+
+        h2 {
+            font-size: 1rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .mockup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .mockup-section {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .mockup-section.current {
+            border: 2px dashed var(--color-border);
+            opacity: 0.7;
+        }
+
+        /* Common history item styling */
+        .history-item {
+            background: var(--color-bg-input);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 1px solid var(--color-border);
+        }
+
+        .history-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .history-game {
+            font-weight: 600;
+            color: var(--mj-blue);
+            margin-bottom: 4px;
+        }
+
+        .change-positive { color: var(--color-score-positive); }
+        .change-negative { color: var(--color-score-negative); }
+
+        /* Current Layout */
+        .current .history-detail {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+        }
+
+        .current .history-changes {
+            margin-top: 8px;
+            font-size: 0.85rem;
+        }
+
+        .current .history-change {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+        }
+
+        /* Option A: Two-Line Split */
+        .option-a .winner-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .option-a .winner-name {
+            font-weight: 500;
+            color: var(--color-text);
+        }
+
+        .option-a .win-badge {
+            font-size: 0.75rem;
+            background: var(--mj-blue);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .option-a .win-badge.self-drawn {
+            background: #7B68EE;
+        }
+
+        .option-a .scoring-line {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        .option-a .score-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+
+        .option-a .score-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Collapsible toggle */
+        .collapsible-toggle {
+            background: none;
+            border: none;
+            color: var(--mj-blue);
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-top: 8px;
+            padding: 4px 0;
+        }
+
+        .collapsible-toggle:hover {
+            text-decoration: underline;
+        }
+
+        .score-details.collapsed {
+            display: none;
+        }
+
+        /* Option B: Icon-Based */
+        .option-b .winner-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .option-b .star {
+            color: #FFD700;
+            font-size: 1.1rem;
+        }
+
+        .option-b .winner-name {
+            font-weight: 600;
+        }
+
+        .option-b .arrow {
+            color: var(--color-text-muted);
+        }
+
+        .option-b .discarder {
+            color: var(--color-text-secondary);
+        }
+
+        .option-b .self-drawn-tag {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            font-style: italic;
+        }
+
+        .option-b .scoring-row {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        .option-b .inline-scores {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+
+        .option-b .inline-score {
+            display: flex;
+            gap: 4px;
+        }
+
+        /* Option C: Card with Header */
+        .option-c .history-item {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .option-c .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: rgba(21, 101, 192, 0.1);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .option-c .card-header .history-game {
+            margin-bottom: 0;
+        }
+
+        .option-c .win-type {
+            font-size: 0.8rem;
+            color: var(--mj-blue);
+            font-weight: 500;
+        }
+
+        .option-c .card-body {
+            padding: 12px;
+        }
+
+        .option-c .detail-row {
+            display: flex;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+        }
+
+        .option-c .detail-label {
+            width: 60px;
+            color: var(--color-text-muted);
+        }
+
+        .option-c .detail-value {
+            color: var(--color-text);
+        }
+
+        /* Option D: Grid Layout */
+        .option-d .content-grid {
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 2px 16px;
+            margin-top: 8px;
+        }
+
+        .option-d .grid-label {
+            color: var(--color-text-muted);
+            font-size: 0.8rem;
+            text-align: right;
+        }
+
+        .option-d .grid-value {
+            font-weight: 500;
+        }
+
+        .option-d .grid-value.winner {
+            color: var(--mj-blue);
+        }
+
+        /* Option E: Winner Emphasis */
+        .option-e .winner-emphasis {
+            text-align: center;
+            padding: 8px 0;
+        }
+
+        .option-e .big-winner {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--mj-blue);
+        }
+
+        .option-e .win-method {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            margin-top: 2px;
+        }
+
+        .option-e .scoring-info {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            margin-top: 4px;
+        }
+
+        /* Option F: Chips/Tags */
+        .option-f .main-text {
+            margin-bottom: 8px;
+            color: var(--color-text);
+        }
+
+        .option-f .chips {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .option-f .chip {
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 12px;
+            background: #E3F2FD;
+            color: var(--mj-blue);
+            border: 1px solid rgba(21, 101, 192, 0.2);
+        }
+
+        .option-f .chip.win-type {
+            background: #F3E5F5;
+            color: #7B1FA2;
+            border-color: rgba(123, 31, 162, 0.2);
+        }
+
+        .option-f .chip.faan {
+            background: #FFF3E0;
+            color: #E65100;
+            border-color: rgba(230, 81, 0, 0.2);
+        }
+
+        .option-f .chip.points {
+            background: #E8F5E9;
+            color: #2E7D32;
+            border-color: rgba(46, 125, 50, 0.2);
+        }
+
+        /* Tie styling */
+        .tie-text {
+            color: var(--color-text-muted);
+            font-style: italic;
+        }
+
+        /* Notes section */
+        .notes {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .notes h3 {
+            color: var(--mj-blue);
+            margin-bottom: 10px;
+        }
+
+        .notes ul {
+            margin-left: 20px;
+            color: var(--color-text-secondary);
+        }
+
+        .notes li {
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Game History Display Variations</h1>
+
+    <div class="mockup-grid">
+        <!-- Current Layout -->
+        <div class="mockup-section current">
+            <h2>Current Layout (for reference)</h2>
+            <div class="history-item">
+                <div class="history-game">Game 5</div>
+                <div class="history-detail">John won from Mary - 3 faan (16 pts)</div>
+                <div class="history-changes">
+                    <div class="history-change"><span>John</span><span class="change-positive">+48</span></div>
+                    <div class="history-change"><span>Mary</span><span class="change-negative">-16</span></div>
+                    <div class="history-change"><span>Bob</span><span class="change-negative">-16</span></div>
+                    <div class="history-change"><span>Alice</span><span class="change-negative">-16</span></div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 4</div>
+                <div class="history-detail">Alice won (Self-Drawn) - 5 faan (32 pts each)</div>
+            </div>
+        </div>
+
+        <!-- Option A: Two-Line Split -->
+        <div class="mockup-section option-a">
+            <h2>Option A: Two-Line Split with Badge</h2>
+            <div class="history-item">
+                <div class="history-game">Game 5</div>
+                <div class="winner-line">
+                    <span class="winner-name">John won from Mary</span>
+                    <span class="win-badge">Discard</span>
+                </div>
+                <div class="scoring-line">3 faan · 16 pts</div>
+                <button class="collapsible-toggle" onclick="this.nextElementSibling.classList.toggle('collapsed')">Show breakdown</button>
+                <div class="score-grid score-details collapsed">
+                    <div class="score-row"><span>John</span><span class="change-positive">+48</span></div>
+                    <div class="score-row"><span>Mary</span><span class="change-negative">-16</span></div>
+                    <div class="score-row"><span>Bob</span><span class="change-negative">-16</span></div>
+                    <div class="score-row"><span>Alice</span><span class="change-negative">-16</span></div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 4</div>
+                <div class="winner-line">
+                    <span class="winner-name">Alice won</span>
+                    <span class="win-badge self-drawn">Self-Drawn</span>
+                </div>
+                <div class="scoring-line">5 faan · 32 pts each</div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 3</div>
+                <div class="winner-line">
+                    <span class="tie-text">Tie (No Winner)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option B: Icon-Based -->
+        <div class="mockup-section option-b">
+            <h2>Option B: Icon-Based Compact</h2>
+            <div class="history-item">
+                <div class="history-game">Game 5</div>
+                <div class="winner-row">
+                    <span class="star">&#9733;</span>
+                    <span class="winner-name">John</span>
+                    <span class="arrow">&#8592;</span>
+                    <span class="discarder">Mary</span>
+                </div>
+                <div class="scoring-row">3 faan · 16 pts</div>
+                <button class="collapsible-toggle" onclick="this.nextElementSibling.classList.toggle('collapsed')">Show breakdown</button>
+                <div class="inline-scores score-details collapsed">
+                    <span class="inline-score"><span>John</span> <span class="change-positive">+48</span></span>
+                    <span class="inline-score"><span>Mary</span> <span class="change-negative">-16</span></span>
+                    <span class="inline-score"><span>Bob</span> <span class="change-negative">-16</span></span>
+                    <span class="inline-score"><span>Alice</span> <span class="change-negative">-16</span></span>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 4</div>
+                <div class="winner-row">
+                    <span class="star">&#9733;</span>
+                    <span class="winner-name">Alice</span>
+                    <span class="self-drawn-tag">(Self-Drawn)</span>
+                </div>
+                <div class="scoring-row">5 faan · 32 pts each</div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 3</div>
+                <div class="tie-text">Tie (No Winner)</div>
+            </div>
+        </div>
+
+        <!-- Option C: Card with Header -->
+        <div class="mockup-section option-c">
+            <h2>Option C: Card with Header Row</h2>
+            <div class="history-item">
+                <div class="card-header">
+                    <span class="history-game">Game 5</span>
+                    <span class="win-type">Discard</span>
+                </div>
+                <div class="card-body">
+                    <div class="detail-row">
+                        <span class="detail-label">Winner:</span>
+                        <span class="detail-value">John</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">From:</span>
+                        <span class="detail-value">Mary</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Score:</span>
+                        <span class="detail-value">3 faan · 16 pts</span>
+                    </div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="card-header">
+                    <span class="history-game">Game 4</span>
+                    <span class="win-type">Self-Drawn</span>
+                </div>
+                <div class="card-body">
+                    <div class="detail-row">
+                        <span class="detail-label">Winner:</span>
+                        <span class="detail-value">Alice</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Score:</span>
+                        <span class="detail-value">5 faan · 32 pts each</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option D: Grid Layout -->
+        <div class="mockup-section option-d">
+            <h2>Option D: Grid/Table Layout (Minimal)</h2>
+            <div class="history-item">
+                <div class="history-game">Game 5</div>
+                <div class="content-grid">
+                    <span class="grid-value winner">John</span>
+                    <span class="grid-label">Winner</span>
+                    <span class="grid-value">from Mary</span>
+                    <span class="grid-label">Discard</span>
+                    <span class="grid-value">3 faan</span>
+                    <span class="grid-label">16 pts</span>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 4</div>
+                <div class="content-grid">
+                    <span class="grid-value winner">Alice</span>
+                    <span class="grid-label">Winner</span>
+                    <span class="grid-value">—</span>
+                    <span class="grid-label">Self-Drawn</span>
+                    <span class="grid-value">5 faan</span>
+                    <span class="grid-label">32 pts each</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option E: Winner Emphasis -->
+        <div class="mockup-section option-e">
+            <h2>Option E: Emphasis on Winner</h2>
+            <div class="history-item">
+                <div class="history-game">Game 5</div>
+                <div class="winner-emphasis">
+                    <div class="big-winner">John</div>
+                    <div class="win-method">won from Mary</div>
+                    <div class="scoring-info">3 faan · 16 pts</div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 4</div>
+                <div class="winner-emphasis">
+                    <div class="big-winner">Alice</div>
+                    <div class="win-method">Self-Drawn</div>
+                    <div class="scoring-info">5 faan · 32 pts each</div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 3</div>
+                <div class="winner-emphasis">
+                    <div class="tie-text">Tie (No Winner)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option F: Chips/Tags -->
+        <div class="mockup-section option-f">
+            <h2>Option F: Horizontal Chips/Tags</h2>
+            <div class="history-item">
+                <div class="history-game">Game 5</div>
+                <div class="main-text">John won from Mary</div>
+                <div class="chips">
+                    <span class="chip win-type">Discard</span>
+                    <span class="chip faan">3 faan</span>
+                    <span class="chip points">16 pts</span>
+                </div>
+                <button class="collapsible-toggle" onclick="this.nextElementSibling.classList.toggle('collapsed')">Show breakdown</button>
+                <div class="score-grid score-details collapsed" style="display:grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 10px; font-size: 0.85rem;">
+                    <div style="display:flex; justify-content: space-between;"><span>John</span><span class="change-positive">+48</span></div>
+                    <div style="display:flex; justify-content: space-between;"><span>Mary</span><span class="change-negative">-16</span></div>
+                    <div style="display:flex; justify-content: space-between;"><span>Bob</span><span class="change-negative">-16</span></div>
+                    <div style="display:flex; justify-content: space-between;"><span>Alice</span><span class="change-negative">-16</span></div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 4</div>
+                <div class="main-text">Alice won</div>
+                <div class="chips">
+                    <span class="chip win-type">Self-Drawn</span>
+                    <span class="chip faan">5 faan</span>
+                    <span class="chip points">32 pts each</span>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 3</div>
+                <div class="tie-text">Tie (No Winner)</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notes">
+        <h3>Notes</h3>
+        <ul>
+            <li><strong>Options A, B, F</strong> include collapsible score breakdowns - click "Show breakdown" to test</li>
+            <li><strong>Option A</strong> - Clean separation with colored badges for win type</li>
+            <li><strong>Option B</strong> - Most compact, uses star (&#9733;) and arrow (&#8592;) symbols</li>
+            <li><strong>Option C</strong> - Most structured with labeled fields, good for clarity</li>
+            <li><strong>Option D</strong> - Minimal with grid alignment, relies on whitespace</li>
+            <li><strong>Option E</strong> - Winner-focused with large centered name</li>
+            <li><strong>Option F</strong> - Modern chip/tag style, colorful and scannable</li>
+        </ul>
+    </div>
+</body>
+</html>
