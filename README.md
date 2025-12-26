@@ -14,7 +14,7 @@ A web app for scorekeeping Cantonese/Hong Kong-style Mahjong games with support 
  
 ## Scoring
 
-Points are determined by faan count (see Faan-to-points table below). Points are paid depending on win type:
+Points are determined by faan count (see faan-to-points table below). Points are paid depending on win type:
 
 - **Self-drawn**: Each of the three losers pays the self-draw amount to the winner.
 - **Discard (Full Gun)**: The discarder pays the full discard amount.
