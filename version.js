@@ -4,8 +4,8 @@ const CHANGELOG = [
   {
     version: '1.0.2',
     changes: [
-      'Entering faans on mobile shows a number pad (instead of the default keyboard).',
-      "It's the little things like this make me happy. 😁"
+      'Entering faans on mobile shows a number pad (instead of a keyboard).',
+      "Little optimizations like this make me happy. 😁"
     ]
   }, {
     version: '1.0.1',

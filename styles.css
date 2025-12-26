@@ -107,7 +107,7 @@ header {
 
 header h1 {
     font-size: 1.8rem;
-    color: var(--mj-red);
+    color: var(--mj-blue);
     margin: 0;
 }
 
@@ -402,7 +402,7 @@ header h1 {
 }
 
 .player-card.is-dealer {
-    border-color: var(--color-dealer);
+    border-color: var(--mj-blue);
 }
 
 .player-name {
@@ -434,23 +434,15 @@ header h1 {
 }
 
 .dealer-badge {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: var(--color-dealer);
-    color: var(--color-text-on-color);
-    font-size: 0.7rem;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-weight: 600;
+    display: none;
 }
 
 .starting-dealer-badge {
     position: absolute;
     top: -8px;
     left: -8px;
-    background: var(--color-starting-dealer);
-    color: var(--mj-ink);
+    background: var(--mj-bamboo-tan);
+    color: var(--mj-ink-light);
     font-size: 0.7rem;
     padding: 4px 8px;
     border-radius: 4px;
@@ -690,8 +682,9 @@ header h1 {
 }
 
 .history-game {
-    font-weight: 600;
-    color: var(--mj-blue);
+    font-weight: 400;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
 }
 
 .history-item .winner-faan {
@@ -703,9 +696,13 @@ header h1 {
     color: var(--color-text-primary);
 }
 
-.history-item .faan-count {
+.history-item .faan-separator {
     color: var(--color-text-muted);
-    margin-left: 6px;
+    margin: 0 6px;
+}
+
+.history-item .faan-count {
+    color: var(--color-text-primary);
 }
 
 .history-item .card-body {
@@ -781,7 +778,7 @@ header h1 {
 }
 
 .dice-total {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     color: var(--color-text-secondary);
     margin-bottom: 20px;
     text-align: center;
@@ -789,8 +786,8 @@ header h1 {
 
 .dice-total span {
     font-weight: 700;
-    color: var(--mj-red);
-    font-size: 1.3rem;
+    color: var(--mj-blue);
+    font-size: 1.5rem;
 }
 
 .btn-small {
@@ -987,10 +984,6 @@ header h1 {
     justify-content: center;
     align-items: center;
     gap: 12px;
-}
-
-.footer-row+.footer-row {
-    margin-top: 8px;
 }
 
 .footer-text {

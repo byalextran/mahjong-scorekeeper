@@ -221,8 +221,6 @@ function renderUI() {
   // Update header
   gameDisplay.textContent = `Game ${gameState.roundNumber}`;
   windDisplay.textContent = `${WIND_CHARS[gameState.prevailingWind]} ${WINDS[gameState.prevailingWind]}`;
-  document.getElementById('scoring-display').textContent =
-    gameState.scoringVariation === 'half' ? '半銃 Shared Gun' : '全銃 Full Gun';
 
   // Update player cards
   playerCards.forEach((card) => {
@@ -502,15 +500,15 @@ function openHistoryModal() {
   } else {
     // Reverse to show latest game first
     historyList.innerHTML = [...gameState.history].reverse().map(h => {
-      let headerRight = '';
+      let headerLeft = '';
       let bodyContent = '';
 
       if (h.winType === 'tie') {
-        headerRight = '<span class="winner-faan"><span class="tie-text">Tie</span></span>';
+        headerLeft = '<span class="winner-faan"><span class="tie-text">Tie</span></span>';
         bodyContent = '<div class="tie-text" style="font-size: 0.85rem;">No score changes</div>';
       } else {
         const faanText = h.faans ? `${h.faans} faan` : '';
-        headerRight = `<span class="winner-faan"><span class="winner-name">${h.winner}</span><span class="faan-count">${faanText}</span></span>`;
+        headerLeft = `<span class="winner-faan"><span class="winner-name">${h.winner}</span>${faanText ? `<span class="faan-separator">·</span><span class="faan-count">${faanText}</span>` : ''}</span>`;
 
         const changesHtml = h.changes.map(c => {
           const cls = c.change > 0 ? 'change-positive' : 'change-negative';
@@ -524,8 +522,8 @@ function openHistoryModal() {
       return `
                 <div class="history-item">
                     <div class="card-header">
+                        ${headerLeft}
                         <span class="history-game">Game ${h.game || h.round}</span>
-                        ${headerRight}
                     </div>
                     <div class="card-body">
                         ${bodyContent}
