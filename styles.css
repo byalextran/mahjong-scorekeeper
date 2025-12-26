@@ -993,9 +993,15 @@ header h1 {
     transition: color 0.2s;
 }
 
+a.footer-text {
+    text-decoration: underline;
+    text-decoration-color: var(--mj-ink-muted);
+    text-underline-offset: 2px;
+}
+
 a.footer-text:hover {
     color: var(--mj-ink);
-    text-decoration: underline;
+    text-decoration-color: var(--mj-ink);
 }
 
 .footer-dot {
