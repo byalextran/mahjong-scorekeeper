@@ -19,21 +19,26 @@ function hashFile(filePath) {
 // Process assets
 const jsHash = hashFile('app.js');
 const cssHash = hashFile('styles.css');
+const versionHash = hashFile('version.js');
 
 const jsOutName = `app.${jsHash}.js`;
 const cssOutName = `styles.${cssHash}.css`;
+const versionOutName = `version.${versionHash}.js`;
 
 // Copy assets with hashed names
 fs.copyFileSync('app.js', path.join(DIST_DIR, jsOutName));
 fs.copyFileSync('styles.css', path.join(DIST_DIR, cssOutName));
+fs.copyFileSync('version.js', path.join(DIST_DIR, versionOutName));
 
 // Update HTML references
 let html = fs.readFileSync('index.html', 'utf8');
 html = html.replace('href="styles.css"', `href="${cssOutName}"`);
+html = html.replace('src="version.js"', `src="${versionOutName}"`);
 html = html.replace('src="app.js"', `src="${jsOutName}"`);
 fs.writeFileSync(path.join(DIST_DIR, 'index.html'), html);
 
 console.log(`Built to ${DIST_DIR}/`);
 console.log(`  ${cssOutName}`);
+console.log(`  ${versionOutName}`);
 console.log(`  ${jsOutName}`);
 console.log(`  index.html`);

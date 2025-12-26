@@ -964,3 +964,94 @@ header h1 {
         font-size: 1rem;
     }
 }
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+    padding: 20px;
+    background: var(--color-bg-body);
+    text-align: center;
+    margin-top: 12px;
+}
+
+.footer-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-row+.footer-row {
+    margin-top: 8px;
+}
+
+.footer-text {
+    color: var(--mj-ink-light);
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a.footer-text:hover {
+    color: var(--mj-ink);
+    text-decoration: underline;
+}
+
+.footer-dot {
+    color: var(--mj-ink-muted);
+}
+
+.github-link {
+    display: flex;
+    align-items: center;
+}
+
+.github-icon {
+    width: 18px;
+    height: 18px;
+    fill: var(--mj-ink-light);
+    transition: fill 0.2s;
+}
+
+.github-link:hover .github-icon {
+    fill: var(--mj-ink);
+}
+
+/* ============================================
+   CHANGELOG MODAL
+   ============================================ */
+.changelog-list {
+    text-align: left;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.changelog-entry {
+    margin-bottom: 16px;
+}
+
+.changelog-entry:last-child {
+    margin-bottom: 0;
+}
+
+.changelog-version {
+    font-weight: 600;
+    color: var(--mj-ink);
+    margin-bottom: 6px;
+}
+
+.changelog-changes {
+    color: var(--mj-ink-medium);
+    font-size: 14px;
+    padding-left: 16px;
+    margin: 0;
+}
+
+.changelog-changes li {
+    margin-bottom: 4px;
+}
+
+.changelog-changes li:last-child {
+    margin-bottom: 0;
+}

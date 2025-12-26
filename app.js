@@ -41,6 +41,7 @@ const diceModal = document.getElementById('dice-modal');
 const gameModal = document.getElementById('game-modal');
 const historyModal = document.getElementById('history-modal');
 const resetModal = document.getElementById('reset-modal');
+const changelogModal = document.getElementById('changelog-modal');
 const kebabBtn = document.getElementById('kebab-btn');
 const kebabDropdown = document.getElementById('kebab-dropdown');
 
@@ -115,6 +116,14 @@ function setupEventListeners() {
   document.getElementById('cancel-reset-btn').addEventListener('click', closeResetModal);
   document.getElementById('confirm-reset-btn').addEventListener('click', confirmReset);
 
+  // Changelog modal
+  document.getElementById('changelog-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    openChangelogModal();
+  });
+  document.getElementById('close-changelog-btn').addEventListener('click', closeChangelogModal);
+  document.getElementById('close-changelog-x-btn').addEventListener('click', closeChangelogModal);
+
   // ESC key to close modals
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -122,8 +131,12 @@ function setupEventListeners() {
       if (!gameModal.classList.contains('hidden')) closeGameModal();
       if (!historyModal.classList.contains('hidden')) closeHistoryModal();
       if (!resetModal.classList.contains('hidden')) closeResetModal();
+      if (!changelogModal.classList.contains('hidden')) closeChangelogModal();
     }
   });
+
+  // Initialize version display
+  initVersionDisplay();
 }
 
 function loadFromLocalStorage() {
@@ -555,4 +568,26 @@ function confirmReset() {
   document.getElementById('player-0').focus();
 
   closeResetModal();
+}
+
+function initVersionDisplay() {
+  document.getElementById('version-display').textContent = `v${APP_VERSION}`;
+}
+
+function openChangelogModal() {
+  const changelogList = document.getElementById('changelog-list');
+  changelogList.innerHTML = CHANGELOG.map(entry => `
+    <div class="changelog-entry">
+      <div class="changelog-version">v${entry.version}</div>
+      <ul class="changelog-changes">
+        ${entry.changes.map(change => `<li>${change}</li>`).join('')}
+      </ul>
+    </div>
+  `).join('');
+
+  changelogModal.classList.remove('hidden');
+}
+
+function closeChangelogModal() {
+  changelogModal.classList.add('hidden');
 }
