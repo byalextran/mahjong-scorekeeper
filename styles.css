@@ -82,6 +82,7 @@ body {
     background: var(--color-bg-body);
     color: var(--color-text-primary);
     min-height: 100vh;
+    padding-bottom: 80px;
 }
 
 .container {
@@ -969,10 +970,15 @@ header h1 {
    FOOTER
    ============================================ */
 .footer {
-    padding: 20px;
-    background: var(--color-bg-body);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 20px;
+    background: var(--mj-bamboo-tan);
+    border-top: 1px solid var(--color-border-strong);
     text-align: center;
-    margin-top: 12px;
+    z-index: 50;
 }
 
 .footer-row {
