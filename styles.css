@@ -828,6 +828,7 @@ header h1 {
     header {
         flex-wrap: wrap;
         gap: 8px;
+        margin-bottom: 0;
     }
 
     header h1 {
@@ -841,7 +842,7 @@ header h1 {
     }
 
     .game-screen .action-row {
-        margin-top: 16px;
+        margin-top: 0;
         width: 100%;
     }
 
@@ -953,7 +954,7 @@ header h1 {
 
     /* Scoring variation on mobile */
     .scoring-variation-group {
-        padding: 12px 16px;
+        padding: 0 16px;
     }
 
     .scoring-variation-group.form-group .form-label {
