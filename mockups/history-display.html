@@ -349,6 +349,187 @@
             font-style: italic;
         }
 
+        /* ========== NEW SIMPLIFIED OPTIONS ========== */
+
+        /* Option G: Simple Header + Grid */
+        .option-g .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .option-g .winner-name {
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .option-g .faan-count {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        .option-g .score-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            font-size: 0.85rem;
+        }
+
+        .option-g .score-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 4px;
+            background: rgba(0,0,0,0.02);
+            border-radius: 4px;
+        }
+
+        /* Option H: Inline Compact */
+        .option-h .winner-faan {
+            margin-bottom: 6px;
+        }
+
+        .option-h .winner-name {
+            font-weight: 600;
+            color: var(--mj-blue);
+        }
+
+        .option-h .faan-pill {
+            display: inline-block;
+            font-size: 0.75rem;
+            background: #FFF3E0;
+            color: #E65100;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+        }
+
+        .option-h .inline-breakdown {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            font-size: 0.85rem;
+        }
+
+        .option-h .player-score {
+            display: flex;
+            gap: 6px;
+        }
+
+        .option-h .player-score .name {
+            color: var(--color-text-secondary);
+        }
+
+        /* Option I: Stacked Clean */
+        .option-i .winner-section {
+            text-align: center;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .option-i .winner-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--mj-blue);
+        }
+
+        .option-i .faan-text {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            margin-top: 2px;
+        }
+
+        .option-i .breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        .option-i .breakdown-item .name {
+            color: var(--color-text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .option-i .breakdown-item .score {
+            font-weight: 500;
+        }
+
+        /* Option J: Left-aligned Minimal */
+        .option-j .main-line {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .option-j .winner-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .option-j .faan-label {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+        }
+
+        .option-j .breakdown-list {
+            font-size: 0.85rem;
+        }
+
+        .option-j .breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .option-j .breakdown-row:last-child {
+            border-bottom: none;
+        }
+
+        .option-j .breakdown-row .name {
+            color: var(--color-text-secondary);
+        }
+
+        /* Option K: Two-Column Layout */
+        .option-k .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .option-k .left-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .option-k .winner-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--mj-blue);
+        }
+
+        .option-k .faan-text {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        .option-k .right-col {
+            font-size: 0.85rem;
+            border-left: 2px solid var(--color-border);
+            padding-left: 12px;
+        }
+
+        .option-k .score-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+        }
+
         /* Notes section */
         .notes {
             margin-top: 30px;
@@ -597,16 +778,206 @@
         </div>
     </div>
 
+    <!-- ========== NEW SIMPLIFIED OPTIONS ========== -->
+    <h1 style="margin-top: 40px;">Simplified Options (Winner + Faans + Breakdown)</h1>
+    <p style="text-align: center; color: #5C5346; margin-bottom: 30px;">Only shows: winner, faan count, and score breakdown (always visible). Win type & points are inferred from breakdown.</p>
+
+    <div class="mockup-grid">
+        <!-- Option G: Simple Header + Grid -->
+        <div class="mockup-section option-g">
+            <h2>Option G: Header Row + Grid</h2>
+            <div class="history-item">
+                <div class="history-game">Game 5</div>
+                <div class="header-row">
+                    <span class="winner-name">John</span>
+                    <span class="faan-count">3 faan</span>
+                </div>
+                <div class="score-grid">
+                    <div class="score-row"><span>John</span><span class="change-positive">+48</span></div>
+                    <div class="score-row"><span>Mary</span><span class="change-negative">-48</span></div>
+                    <div class="score-row"><span>Bob</span><span class="change-negative">—</span></div>
+                    <div class="score-row"><span>Alice</span><span class="change-negative">—</span></div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 4</div>
+                <div class="header-row">
+                    <span class="winner-name">Alice</span>
+                    <span class="faan-count">5 faan</span>
+                </div>
+                <div class="score-grid">
+                    <div class="score-row"><span>John</span><span class="change-negative">-32</span></div>
+                    <div class="score-row"><span>Mary</span><span class="change-negative">-32</span></div>
+                    <div class="score-row"><span>Bob</span><span class="change-negative">-32</span></div>
+                    <div class="score-row"><span>Alice</span><span class="change-positive">+96</span></div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 3</div>
+                <div class="tie-text">Tie (No Winner)</div>
+            </div>
+        </div>
+
+        <!-- Option H: Inline Compact -->
+        <div class="mockup-section option-h">
+            <h2>Option H: Winner + Pill + Inline Scores</h2>
+            <div class="history-item">
+                <div class="history-game">Game 5</div>
+                <div class="winner-faan">
+                    <span class="winner-name">John</span>
+                    <span class="faan-pill">3 faan</span>
+                </div>
+                <div class="inline-breakdown">
+                    <span class="player-score"><span class="name">John</span> <span class="change-positive">+48</span></span>
+                    <span class="player-score"><span class="name">Mary</span> <span class="change-negative">-48</span></span>
+                    <span class="player-score"><span class="name">Bob</span> <span>—</span></span>
+                    <span class="player-score"><span class="name">Alice</span> <span>—</span></span>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 4</div>
+                <div class="winner-faan">
+                    <span class="winner-name">Alice</span>
+                    <span class="faan-pill">5 faan</span>
+                </div>
+                <div class="inline-breakdown">
+                    <span class="player-score"><span class="name">John</span> <span class="change-negative">-32</span></span>
+                    <span class="player-score"><span class="name">Mary</span> <span class="change-negative">-32</span></span>
+                    <span class="player-score"><span class="name">Bob</span> <span class="change-negative">-32</span></span>
+                    <span class="player-score"><span class="name">Alice</span> <span class="change-positive">+96</span></span>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 3</div>
+                <div class="tie-text">Tie (No Winner)</div>
+            </div>
+        </div>
+
+        <!-- Option I: Stacked Clean -->
+        <div class="mockup-section option-i">
+            <h2>Option I: Centered Winner + 4-Column Grid</h2>
+            <div class="history-item">
+                <div class="history-game">Game 5</div>
+                <div class="winner-section">
+                    <div class="winner-name">John</div>
+                    <div class="faan-text">3 faan</div>
+                </div>
+                <div class="breakdown-grid">
+                    <div class="breakdown-item"><div class="name">John</div><div class="score change-positive">+48</div></div>
+                    <div class="breakdown-item"><div class="name">Mary</div><div class="score change-negative">-48</div></div>
+                    <div class="breakdown-item"><div class="name">Bob</div><div class="score">—</div></div>
+                    <div class="breakdown-item"><div class="name">Alice</div><div class="score">—</div></div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 4</div>
+                <div class="winner-section">
+                    <div class="winner-name">Alice</div>
+                    <div class="faan-text">5 faan</div>
+                </div>
+                <div class="breakdown-grid">
+                    <div class="breakdown-item"><div class="name">John</div><div class="score change-negative">-32</div></div>
+                    <div class="breakdown-item"><div class="name">Mary</div><div class="score change-negative">-32</div></div>
+                    <div class="breakdown-item"><div class="name">Bob</div><div class="score change-negative">-32</div></div>
+                    <div class="breakdown-item"><div class="name">Alice</div><div class="score change-positive">+96</div></div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 3</div>
+                <div class="winner-section">
+                    <div class="tie-text">Tie (No Winner)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option J: Left-aligned Minimal -->
+        <div class="mockup-section option-j">
+            <h2>Option J: Left-Aligned List Style</h2>
+            <div class="history-item">
+                <div class="history-game">Game 5</div>
+                <div class="main-line">
+                    <span class="winner-name">John</span>
+                    <span class="faan-label">3 faan</span>
+                </div>
+                <div class="breakdown-list">
+                    <div class="breakdown-row"><span class="name">John</span><span class="change-positive">+48</span></div>
+                    <div class="breakdown-row"><span class="name">Mary</span><span class="change-negative">-48</span></div>
+                    <div class="breakdown-row"><span class="name">Bob</span><span>—</span></div>
+                    <div class="breakdown-row"><span class="name">Alice</span><span>—</span></div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 4</div>
+                <div class="main-line">
+                    <span class="winner-name">Alice</span>
+                    <span class="faan-label">5 faan</span>
+                </div>
+                <div class="breakdown-list">
+                    <div class="breakdown-row"><span class="name">John</span><span class="change-negative">-32</span></div>
+                    <div class="breakdown-row"><span class="name">Mary</span><span class="change-negative">-32</span></div>
+                    <div class="breakdown-row"><span class="name">Bob</span><span class="change-negative">-32</span></div>
+                    <div class="breakdown-row"><span class="name">Alice</span><span class="change-positive">+96</span></div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 3</div>
+                <div class="tie-text">Tie (No Winner)</div>
+            </div>
+        </div>
+
+        <!-- Option K: Two-Column Layout -->
+        <div class="mockup-section option-k">
+            <h2>Option K: Two-Column Split</h2>
+            <div class="history-item">
+                <div class="history-game">Game 5</div>
+                <div class="two-col">
+                    <div class="left-col">
+                        <span class="winner-name">John</span>
+                        <span class="faan-text">3 faan</span>
+                    </div>
+                    <div class="right-col">
+                        <div class="score-line"><span>John</span><span class="change-positive">+48</span></div>
+                        <div class="score-line"><span>Mary</span><span class="change-negative">-48</span></div>
+                        <div class="score-line"><span>Bob</span><span>—</span></div>
+                        <div class="score-line"><span>Alice</span><span>—</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 4</div>
+                <div class="two-col">
+                    <div class="left-col">
+                        <span class="winner-name">Alice</span>
+                        <span class="faan-text">5 faan</span>
+                    </div>
+                    <div class="right-col">
+                        <div class="score-line"><span>John</span><span class="change-negative">-32</span></div>
+                        <div class="score-line"><span>Mary</span><span class="change-negative">-32</span></div>
+                        <div class="score-line"><span>Bob</span><span class="change-negative">-32</span></div>
+                        <div class="score-line"><span>Alice</span><span class="change-positive">+96</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="history-item">
+                <div class="history-game">Game 3</div>
+                <div class="tie-text" style="padding: 8px 0;">Tie (No Winner)</div>
+            </div>
+        </div>
+    </div>
+
     <div class="notes">
         <h3>Notes</h3>
         <ul>
-            <li><strong>Options A, B, F</strong> include collapsible score breakdowns - click "Show breakdown" to test</li>
-            <li><strong>Option A</strong> - Clean separation with colored badges for win type</li>
-            <li><strong>Option B</strong> - Most compact, uses star (&#9733;) and arrow (&#8592;) symbols</li>
-            <li><strong>Option C</strong> - Most structured with labeled fields, good for clarity</li>
-            <li><strong>Option D</strong> - Minimal with grid alignment, relies on whitespace</li>
-            <li><strong>Option E</strong> - Winner-focused with large centered name</li>
-            <li><strong>Option F</strong> - Modern chip/tag style, colorful and scannable</li>
+            <li><strong>Options A-F</strong> - Original options showing win type, points, etc. (more verbose)</li>
+            <li><strong>Options G-K</strong> - Simplified options showing only: winner, faans, breakdown</li>
+        </ul>
+        <h3 style="margin-top: 16px;">Simplified Options Summary</h3>
+        <ul>
+            <li><strong>Option G</strong> - Header row with winner left, faans right; 2-column score grid below</li>
+            <li><strong>Option H</strong> - Winner name + orange faan pill; inline horizontal scores</li>
+            <li><strong>Option I</strong> - Centered winner with divider; 4-column score grid (compact)</li>
+            <li><strong>Option J</strong> - Left-aligned list style; vertical score breakdown with subtle dividers</li>
+            <li><strong>Option K</strong> - Two-column split: winner/faans on left, scores on right</li>
         </ul>
     </div>
 </body>
