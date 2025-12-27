@@ -507,16 +507,21 @@ function openHistoryModal() {
         headerLeft = '<span class="winner-faan"><span class="tie-text">Tie</span></span>';
         bodyContent = '<div class="tie-text" style="font-size: 0.85rem;">No score changes</div>';
       } else {
-        const faanText = h.faans ? `${h.faans} faan` : '';
-        headerLeft = `<span class="winner-faan"><span class="winner-name">${h.winner}</span>${faanText ? `<span class="faan-separator">·</span><span class="faan-count">${faanText}</span>` : ''}</span>`;
+        const faanLabel = h.faans === 1 ? 'faan' : 'faans';
+        const faanText = `${h.faans} ${faanLabel}`;
+        headerLeft = `<span class="winner-faan"><span class="winner-name">${h.winner}</span><span class="faan-separator">·</span><span class="faan-count">${faanText}</span></span>`;
 
-        const changesHtml = h.changes.map(c => {
-          const cls = c.change > 0 ? 'change-positive' : 'change-negative';
-          const sign = c.change > 0 ? '+' : '';
-          return `<div class="history-change"><span>${c.name}</span><span class="${cls}">${sign}${c.change}</span></div>`;
-        }).join('');
-
-        bodyContent = changesHtml ? `<div class="history-changes">${changesHtml}</div>` : '';
+        const allZero = h.changes.every(c => c.change === 0);
+        if (allZero) {
+          bodyContent = '<div class="tie-text" style="font-size: 0.85rem;">No score changes</div>';
+        } else {
+          const changesHtml = h.changes.map(c => {
+            const cls = c.change > 0 ? 'change-positive' : 'change-negative';
+            const sign = c.change > 0 ? '+' : '';
+            return `<div class="history-change"><span>${c.name}</span><span class="${cls}">${sign}${c.change}</span></div>`;
+          }).join('');
+          bodyContent = changesHtml ? `<div class="history-changes">${changesHtml}</div>` : '';
+        }
       }
 
       return `
