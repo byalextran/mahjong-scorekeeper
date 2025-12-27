@@ -1,6 +1,12 @@
-const APP_VERSION = '1.1.1';
+const APP_VERSION = '1.1.2';
 
 const CHANGELOG = [
+  {
+    version: '1.1.2',
+    changes: [
+      'Simplified UI for wins with zero faans.'
+    ]
+  },
   {
     version: '1.1.1',
     changes: [
