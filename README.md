@@ -46,13 +46,37 @@ If you have a feature request or a variation you'd like supported, please let me
 
 Only needed if you want to make modifications and host the app yourself. The latest version will always be available at [mahjong.alextran.org](https://mahjong.alextran.org/). 
 
+### Prerequisites
+
+Before installing this project, make sure you have the following installed:
+
+- [Node.js](https://nodejs.org/en/download)
+- [Wrangler](https://developers.cloudflare.com/workers/wrangler/install-and-update/) and a [Cloudflare Workers account](https://dash.cloudflare.com/sign-up/workers-and-pages)
+- [Git](https://git-scm.com/install/)
+
+**Clone Repo**
+
 ```bash
-npm install
-npm run deploy
+git clone https://github.com/byalextran/mahjong-scorekeeper.git
+cd mahjong-scorekeeper
 ```
 
-The build script generates cache-busted assets in `dist/` before deploying.
+**Authenticate With Cloudflare**
 
-## License
+```bash
+wrangler login
+# Follow the link/instructions to authenticate.
+```
 
-MIT
+**Install Dependencies**
+
+```bash
+npm install
+```
+
+**Deploy to Cloudflare**
+
+```bash
+npm run deploy
+# If deploying for the first time, follow the prompts.
+```
