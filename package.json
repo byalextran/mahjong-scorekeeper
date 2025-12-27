@@ -3,6 +3,6 @@
   "private": true,
   "scripts": {
     "build": "node build.js",
-    "deploy": "git push && node build.js && npx wrangler pages deploy"
+    "deploy": "node build.js && npx wrangler pages deploy"
   }
 }
