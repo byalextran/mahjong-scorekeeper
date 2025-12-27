@@ -54,29 +54,30 @@ Before installing this project, make sure you have the following installed:
 - [Wrangler](https://developers.cloudflare.com/workers/wrangler/install-and-update/) and a [Cloudflare Workers account](https://dash.cloudflare.com/sign-up/workers-and-pages)
 - [Git](https://git-scm.com/install/)
 
-**Clone Repo**
+### Clone Repo
 
 ```bash
 git clone https://github.com/byalextran/mahjong-scorekeeper.git
 cd mahjong-scorekeeper
 ```
 
-**Authenticate With Cloudflare**
+### Authenticate With Cloudflare
 
 ```bash
 wrangler login
-# Follow the link/instructions to authenticate.
 ```
+Follow the link/instructions to authenticate.
 
-**Install Dependencies**
+### Install Dependencies
 
 ```bash
 npm install
 ```
 
-**Deploy to Cloudflare**
+### Deploy to Cloudflare
 
 ```bash
 npm run deploy
-# If deploying for the first time, follow the prompts.
 ```
+
+If deploying for the first time, follow the prompts.
