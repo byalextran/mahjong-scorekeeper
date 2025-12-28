@@ -82,7 +82,18 @@ html = html.replace('href="styles.css"', `href="${cssOutName}"`);
 html = html.replace('src="app.js"', `src="${jsOutName}"`);
 fs.writeFileSync(path.join(DIST_DIR, 'index.html'), html);
 
-console.log(`Built to ${DIST_DIR}/`);
-console.log(`  ${cssOutName}`);
-console.log(`  ${jsOutName} (bundled)`);
-console.log(`  index.html`);
+// Copy assets directory
+const ASSETS_DIR = 'assets';
+if (fs.existsSync(ASSETS_DIR)) {
+  fs.cpSync(ASSETS_DIR, path.join(DIST_DIR, ASSETS_DIR), { recursive: true });
+  console.log(`Built to ${DIST_DIR}/`);
+  console.log(`  ${cssOutName}`);
+  console.log(`  ${jsOutName} (bundled)`);
+  console.log(`  index.html`);
+  console.log(`  assets/`);
+} else {
+  console.log(`Built to ${DIST_DIR}/`);
+  console.log(`  ${cssOutName}`);
+  console.log(`  ${jsOutName} (bundled)`);
+  console.log(`  index.html`);
+}
