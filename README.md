@@ -61,6 +61,8 @@ git clone https://github.com/byalextran/mahjong-scorekeeper.git
 cd mahjong-scorekeeper
 ```
 
+After making changes, run the test suite to confirm all tests still pass.
+
 ### Authenticate With Cloudflare
 
 ```bash
@@ -81,3 +83,22 @@ npm run deploy
 ```
 
 If deploying for the first time, follow the prompts.
+
+## Run Test Suite
+
+Core game logic is covered by unit and integration tests.
+
+```bash
+npm run test:run
+```
+
+### Update App
+
+Make sure you're in the `mahjong-scorekeeper` directory and run: 
+
+```bash
+git pull
+npm install
+```
+
+When you're ready to deploy again, run `npm run deploy`.
