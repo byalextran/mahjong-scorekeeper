@@ -5,7 +5,7 @@ export const CHANGELOG = [
     version: '2.1.0',
     changes: [
       'Added Google Analytics tracking.',
-      'Added description and image tags for improved social sharing.'
+      'Added meta tags for improved social sharing.'
     ]
   },
   {
