@@ -1,5 +1,5 @@
 import { STORAGE_KEY, STARTING_SCORE, WINDS, WIND_CHARS, FAAN_TABLE } from './src/constants.js';
-import { faanToPoints } from './src/gameLogic.js';
+import { faanToPoints, processWin, processTie } from './src/gameLogic.js';
 import { APP_VERSION, CHANGELOG } from './version.js';
 
 let gameState = null;
@@ -335,7 +335,7 @@ function submitGame() {
 
   // Handle tie
   if (winner === 'tie') {
-    processTie();
+    handleTie();
     closeGameModal();
     return;
   }
@@ -369,104 +369,21 @@ function submitGame() {
     discarderIndex = parseInt(discarder);
   }
 
-  processWin(winnerIndex, winType, discarderIndex, points, faans);
+  handleWin(winnerIndex, winType, discarderIndex, points, faans);
   closeGameModal();
 }
 
-function processWin(winnerIndex, winType, discarderIndex, points, faans) {
-  const changes = [];
-
-  if (winType === 'self-drawn') {
-    // All 3 losers pay the winner
-    gameState.players.forEach((player, index) => {
-      if (index === winnerIndex) {
-        player.score += points * 3;
-        changes.push({ playerIndex: index, change: points * 3 });
-      } else {
-        player.score -= points;
-        changes.push({ playerIndex: index, change: -points });
-      }
-    });
-  } else {
-    // Discard win
-    if (gameState.scoringVariation === 'half') {
-      // 半銃: Discarder pays half, others pay quarter each
-      const discarderPays = points / 2;
-      const otherPay = points / 4;
-
-      gameState.players.forEach((player, index) => {
-        if (index === winnerIndex) {
-          player.score += points;
-          changes.push({ playerIndex: index, change: points });
-        } else if (index === discarderIndex) {
-          player.score -= discarderPays;
-          changes.push({ playerIndex: index, change: -discarderPays });
-        } else {
-          player.score -= otherPay;
-          changes.push({ playerIndex: index, change: -otherPay });
-        }
-      });
-    } else {
-      // 全銃: Only discarder pays (default)
-      gameState.players[winnerIndex].score += points;
-      gameState.players[discarderIndex].score -= points;
-      changes.push({ playerIndex: winnerIndex, change: points });
-      changes.push({ playerIndex: discarderIndex, change: -points });
-    }
-  }
-
-  // Record history
-  gameState.history.push({
-    game: gameState.roundNumber,
-    winner: gameState.players[winnerIndex].name,
-    winType,
-    discarder: discarderIndex !== null ? gameState.players[discarderIndex].name : null,
-    faans,
-    points,
-    changes: changes.map(c => ({
-      name: gameState.players[c.playerIndex].name,
-      change: c.change
-    }))
-  });
-
-  // Handle dealer rotation
-  if (winnerIndex !== gameState.dealerIndex) {
-    rotateDealer();
-  }
-
-  gameState.roundNumber++;
+function handleWin(winnerIndex, winType, discarderIndex, points, faans) {
+  const result = processWin(gameState, winnerIndex, winType, discarderIndex, points, faans);
+  gameState = result.newState;
   saveToLocalStorage();
   renderUI();
 }
 
-function processTie() {
-  // Record history
-  gameState.history.push({
-    game: gameState.roundNumber,
-    winner: null,
-    winType: 'tie',
-    discarder: null,
-    points: 0,
-    changes: []
-  });
-
-  // Dealer rotates on tie
-  rotateDealer();
-
-  gameState.roundNumber++;
+function handleTie() {
+  gameState = processTie(gameState);
   saveToLocalStorage();
   renderUI();
-}
-
-function rotateDealer() {
-  gameState.dealerIndex = (gameState.dealerIndex + 1) % 4;
-  gameState.dealerRotations++;
-
-  // Prevailing wind changes after all 4 players have been dealer
-  if (gameState.dealerRotations >= 4) {
-    gameState.prevailingWind = (gameState.prevailingWind + 1) % 4;
-    gameState.dealerRotations = 0;
-  }
 }
 
 function openHistoryModal() {

@@ -17,22 +17,33 @@ function stripExports(code) {
     .replace(/^export\s+/gm, '');
 }
 
-// Remove import statements from code
+// Remove import statements from code (handles multi-line imports)
 function stripImports(code) {
-  return code.replace(/^import\s+.*?from\s+['"].*?['"];?\s*$/gm, '');
+  // Single-line imports
+  code = code.replace(/^import\s+.*?from\s+['"].*?['"];?\s*$/gm, '');
+  // Multi-line imports: import { ... } from '...'
+  code = code.replace(/^import\s*\{[\s\S]*?\}\s*from\s*['"].*?['"];?\s*$/gm, '');
+  return code;
 }
 
-// Read and process a module file
-function processModule(filePath) {
+// Read and process a module file (strips imports and exports)
+function processFullModule(filePath) {
   const code = fs.readFileSync(filePath, 'utf8');
   return stripExports(stripImports(code));
 }
 
 // Bundle modules in dependency order
 function bundle() {
-  const constants = processModule('src/constants.js');
-  const gameLogic = processModule('src/gameLogic.js');
-  const version = processModule('version.js');
+  // constants.js - include everything (all are used by app.js)
+  const constants = processFullModule('src/constants.js');
+
+  // gameLogic.js - include everything (no naming conflicts after refactoring)
+  const gameLogic = processFullModule('src/gameLogic.js');
+
+  // version.js - include everything
+  const version = processFullModule('version.js');
+
+  // app.js - strip imports
   const app = stripImports(fs.readFileSync('app.js', 'utf8'));
 
   // Concatenate in dependency order
@@ -43,6 +54,7 @@ function bundle() {
     constants,
     '// === src/gameLogic.js ===',
     gameLogic,
+    '',
     '// === version.js ===',
     version,
     '// === app.js ===',

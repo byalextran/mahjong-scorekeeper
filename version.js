@@ -1,6 +1,12 @@
-export const APP_VERSION = '2.0.2';
+export const APP_VERSION = '2.0.3';
 
 export const CHANGELOG = [
+  {
+    version: '2.0.3',
+    changes: [
+      'Removed duplicated code.'
+    ]
+  },
   {
     version: '2.0.2',
     changes: [
