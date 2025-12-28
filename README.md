@@ -1,5 +1,7 @@
 # Mahjong Scorekeeper
 
+![Tests](https://github.com/byalextran/mahjong-scorekeeper/actions/workflows/test.yml/badge.svg)
+
 [View Demo](https://mahjong.alextran.org/)
 
 A web app for scorekeeping Cantonese/Hong Kong-style Mahjong games with support for:
