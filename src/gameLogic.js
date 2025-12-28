@@ -1,14 +1,17 @@
-import { FAAN_TABLE, STARTING_SCORE } from './constants.js';
+import { FAAN_TABLE, STARTING_SCORE, MAX_FAAN } from './constants.js';
 
 /**
  * Convert faan count to points based on win type
  * @param {number} faan - Number of faans
  * @param {string} winType - 'self-drawn' or 'discard'
  * @returns {number} Points value
+ * @throws {RangeError} If faan exceeds MAX_FAAN
  */
 export function faanToPoints(faan, winType) {
   if (faan <= 0) return 0;
-  if (faan > 13) faan = 13; // Cap at max
+  if (faan > MAX_FAAN) {
+    throw new RangeError(`Faan cannot exceed ${MAX_FAAN}`);
+  }
   const [selfDraw, discard] = FAAN_TABLE[faan];
   return winType === 'self-drawn' ? selfDraw : discard;
 }

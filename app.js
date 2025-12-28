@@ -1,4 +1,4 @@
-import { STORAGE_KEY, STARTING_SCORE, WINDS, WIND_CHARS, FAAN_TABLE } from './src/constants.js';
+import { STORAGE_KEY, STARTING_SCORE, WINDS, WIND_CHARS, FAAN_TABLE, MAX_FAAN } from './src/constants.js';
 import { faanToPoints, processWin, processTie } from './src/gameLogic.js';
 import { APP_VERSION, CHANGELOG } from './version.js';
 
@@ -28,8 +28,6 @@ const pointsGroup = document.getElementById('points-group');
 const pointsInput = document.getElementById('points-input');
 const faanError = document.getElementById('faan-error');
 const historyList = document.getElementById('history-list');
-
-const MAX_FAAN = Math.max(...Object.keys(FAAN_TABLE).map(Number));
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {

@@ -1,5 +1,6 @@
 import { describe, test, expect } from 'vitest';
 import { faanToPoints } from '../../src/gameLogic.js';
+import { MAX_FAAN, FAAN_TABLE } from '../../src/constants.js';
 
 describe('faanToPoints', () => {
   describe('edge cases', () => {
@@ -16,9 +17,31 @@ describe('faanToPoints', () => {
       expect(faanToPoints(-5, 'discard')).toBe(0);
     });
 
-    test('faan above 13 is capped at 13', () => {
-      expect(faanToPoints(15, 'self-drawn')).toBe(faanToPoints(13, 'self-drawn'));
-      expect(faanToPoints(20, 'discard')).toBe(faanToPoints(13, 'discard'));
+    test('faan above MAX_FAAN throws RangeError', () => {
+      expect(() => faanToPoints(MAX_FAAN + 1, 'self-drawn')).toThrow(RangeError);
+      expect(() => faanToPoints(MAX_FAAN + 7, 'discard')).toThrow(RangeError);
+      expect(() => faanToPoints(50, 'self-drawn')).toThrow(`Faan cannot exceed ${MAX_FAAN}`);
+    });
+  });
+
+  describe('valid faan range (0 to MAX_FAAN)', () => {
+    test('all valid faan values (1 to MAX_FAAN) return positive points', () => {
+      for (let faan = 1; faan <= MAX_FAAN; faan++) {
+        expect(faanToPoints(faan, 'self-drawn')).toBeGreaterThan(0);
+        expect(faanToPoints(faan, 'discard')).toBeGreaterThan(0);
+      }
+    });
+
+    test('all valid faan values (1 to MAX_FAAN) have entries in FAAN_TABLE', () => {
+      for (let faan = 1; faan <= MAX_FAAN; faan++) {
+        expect(FAAN_TABLE[faan]).toBeDefined();
+        expect(FAAN_TABLE[faan]).toHaveLength(2);
+      }
+    });
+
+    test('0 faan is valid and returns 0 points', () => {
+      expect(faanToPoints(0, 'self-drawn')).toBe(0);
+      expect(faanToPoints(0, 'discard')).toBe(0);
     });
   });
 

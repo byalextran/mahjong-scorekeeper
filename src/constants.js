@@ -19,3 +19,5 @@ export const FAAN_TABLE = {
   12: [384, 768],
   13: [512, 1024],
 };
+
+export const MAX_FAAN = Math.max(...Object.keys(FAAN_TABLE).map(Number));
