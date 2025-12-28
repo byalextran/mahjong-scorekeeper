@@ -1,6 +1,12 @@
-export const APP_VERSION = '1.2.0';
+export const APP_VERSION = '1.2.1';
 
 export const CHANGELOG = [
+  {
+    version: '1.2.1',
+    changes: [
+      'UI size and label adjustments.'
+    ]
+  },
   {
     version: '1.2.0',
     changes: [
