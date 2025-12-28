@@ -1,9 +1,11 @@
+// Game constants - also available in src/constants.js for testing
 const STORAGE_KEY = 'mahjong_game';
 const STARTING_SCORE = 0;
 const WINDS = ['East', 'South', 'West', 'North'];
 const WIND_CHARS = ['東', '南', '西', '北'];
 
 // Faan to points conversion table [faan]: [selfDraw, discard]
+// Pure game logic functions are in src/gameLogic.js for testing
 const FAAN_TABLE = {
   1: [2, 4],
   2: [4, 8],
