@@ -395,7 +395,7 @@ header h1 {
 
 .starting-dealer-badge {
     position: absolute;
-    top: -8px;
+    top: -12px;
     left: 50%;
     transform: translateX(-50%);
     background: var(--mj-bamboo-tan);
