@@ -1,6 +1,6 @@
-const APP_VERSION = '1.1.2';
+export const APP_VERSION = '1.1.2';
 
-const CHANGELOG = [
+export const CHANGELOG = [
   {
     version: '1.1.2',
     changes: [

@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node build.js",
-    "deploy": "node build.js && npx wrangler pages deploy",
+    "build": "node build.cjs",
+    "deploy": "node build.cjs && npx wrangler pages deploy",
     "test": "vitest",
     "test:run": "vitest run"
   },

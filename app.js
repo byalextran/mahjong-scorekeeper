@@ -1,33 +1,6 @@
-// Game constants - also available in src/constants.js for testing
-const STORAGE_KEY = 'mahjong_game';
-const STARTING_SCORE = 0;
-const WINDS = ['East', 'South', 'West', 'North'];
-const WIND_CHARS = ['東', '南', '西', '北'];
-
-// Faan to points conversion table [faan]: [selfDraw, discard]
-// Pure game logic functions are in src/gameLogic.js for testing
-const FAAN_TABLE = {
-  1: [2, 4],
-  2: [4, 8],
-  3: [8, 16],
-  4: [16, 32],
-  5: [32, 64],
-  6: [48, 96],
-  7: [64, 128],
-  8: [96, 192],
-  9: [128, 256],
-  10: [192, 384],
-  11: [256, 512],
-  12: [384, 768],
-  13: [512, 1024]
-};
-
-function faanToPoints(faan, winType) {
-  if (faan <= 0) return 0;
-  if (faan > 13) faan = 13; // Cap at max
-  const [selfDraw, discard] = FAAN_TABLE[faan];
-  return winType === 'self-drawn' ? selfDraw : discard;
-}
+import { STORAGE_KEY, STARTING_SCORE, WINDS, WIND_CHARS, FAAN_TABLE } from './src/constants.js';
+import { faanToPoints } from './src/gameLogic.js';
+import { APP_VERSION, CHANGELOG } from './version.js';
 
 let gameState = null;
 

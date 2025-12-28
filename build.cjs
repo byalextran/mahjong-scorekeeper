@@ -16,29 +16,30 @@ function hashFile(filePath) {
   return crypto.createHash('md5').update(content).digest('hex').slice(0, 8);
 }
 
-// Process assets
+// Process assets (hash entry points only)
 const jsHash = hashFile('app.js');
 const cssHash = hashFile('styles.css');
-const versionHash = hashFile('version.js');
 
 const jsOutName = `app.${jsHash}.js`;
 const cssOutName = `styles.${cssHash}.css`;
-const versionOutName = `version.${versionHash}.js`;
 
 // Copy assets with hashed names
 fs.copyFileSync('app.js', path.join(DIST_DIR, jsOutName));
 fs.copyFileSync('styles.css', path.join(DIST_DIR, cssOutName));
-fs.copyFileSync('version.js', path.join(DIST_DIR, versionOutName));
+
+// Copy ES module dependencies (unhashed - cache busted via app.js hash)
+fs.copyFileSync('version.js', path.join(DIST_DIR, 'version.js'));
+fs.cpSync('src', path.join(DIST_DIR, 'src'), { recursive: true });
 
 // Update HTML references
 let html = fs.readFileSync('index.html', 'utf8');
 html = html.replace('href="styles.css"', `href="${cssOutName}"`);
-html = html.replace('src="version.js"', `src="${versionOutName}"`);
 html = html.replace('src="app.js"', `src="${jsOutName}"`);
 fs.writeFileSync(path.join(DIST_DIR, 'index.html'), html);
 
 console.log(`Built to ${DIST_DIR}/`);
 console.log(`  ${cssOutName}`);
-console.log(`  ${versionOutName}`);
 console.log(`  ${jsOutName}`);
+console.log(`  version.js`);
+console.log(`  src/`);
 console.log(`  index.html`);
