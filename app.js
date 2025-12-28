@@ -26,7 +26,10 @@ const discarderGroup = document.getElementById('discarder-group');
 const discarderSelect = document.getElementById('discarder-select');
 const pointsGroup = document.getElementById('points-group');
 const pointsInput = document.getElementById('points-input');
+const faanError = document.getElementById('faan-error');
 const historyList = document.getElementById('history-list');
+
+const MAX_FAAN = Math.max(...Object.keys(FAAN_TABLE).map(Number));
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -289,6 +292,7 @@ function openGameModal() {
   discarderGroup.classList.add('hidden');
   pointsGroup.classList.add('hidden');
   pointsInput.value = '';
+  faanError.classList.add('hidden');
   document.querySelector('input[name="win-type"][value="self-drawn"]').checked = true;
 
   gameModal.classList.remove('hidden');
@@ -351,8 +355,9 @@ function submitGame() {
   const faans = parseInt(pointsInput.value);
 
   // Validate faans
-  if (isNaN(faans) || faans < 0) {
-    alert('Please enter valid faans.');
+  if (isNaN(faans) || faans < 0 || faans > MAX_FAAN) {
+    faanError.textContent = `Please enter a value between 0 and ${MAX_FAAN}.`;
+    faanError.classList.remove('hidden');
     return;
   }
 
