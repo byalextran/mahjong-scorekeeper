@@ -1,14 +1,20 @@
-export const APP_VERSION = '1.2.1';
+export const APP_VERSION = '2.0.2';
 
 export const CHANGELOG = [
   {
-    version: '1.2.1',
+    version: '2.0.2',
+    changes: [
+      'Fixed caching regression.'
+    ]
+  },
+  {
+    version: '2.0.1',
     changes: [
       'UI size and label adjustments.'
     ]
   },
   {
-    version: '1.2.0',
+    version: '2.0.0',
     changes: [
       'Refactored for unit/integration testing and added tests.'
     ]
