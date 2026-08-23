@@ -690,7 +690,6 @@ header h1 {
 .history-meta {
     color: var(--color-text-secondary);
     font-size: 0.85rem;
-    margin-left: 6px;
 }
 
 .history-change {

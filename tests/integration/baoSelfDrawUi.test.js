@@ -63,7 +63,7 @@ describe('integration: bao self-draw modal flow', () => {
 
     document.getElementById('history-btn').click();
     const historyText = document.getElementById('history-list').textContent;
-    expect(historyText).toContain('Carolbao payer');
+    expect(historyText).toContain('Carol·bao payer');
     expect(historyText).not.toContain('Bao payer: Carol');
   });
 

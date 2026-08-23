@@ -502,7 +502,7 @@ function openHistoryModal() {
             const cls = c.change > 0 ? 'change-positive' : 'change-negative';
             const sign = c.change > 0 ? '+' : '';
             const baoPayerLabel = h.baoPayer === c.name
-              ? '<span class="history-meta">bao payer</span>'
+              ? '<span class="faan-separator">·</span><span class="history-meta">bao payer</span>'
               : '';
             return `<div class="history-change"><span>${c.name}${baoPayerLabel}</span><span class="${cls}">${sign}${c.change}</span></div>`;
           }).join('');
