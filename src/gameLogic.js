@@ -1,4 +1,9 @@
-import { FAAN_TABLE, STARTING_SCORE, MAX_FAAN } from './constants.js';
+import {
+  FAAN_TABLE,
+  STARTING_SCORE,
+  MAX_FAAN,
+  BAO_SELF_DRAW_MIN_FAAN,
+} from './constants.js';
 
 /**
  * Convert faan count to points based on win type
@@ -80,23 +85,40 @@ export function processWin(
   winType,
   discarderIndex,
   points,
-  faans
+  faans,
+  options = {}
 ) {
   // Deep clone state
   const newState = JSON.parse(JSON.stringify(gameState));
   const changes = [];
+  const baoSelfDraw =
+    winType === 'self-drawn' &&
+    faans >= BAO_SELF_DRAW_MIN_FAAN &&
+    options.baoSelfDraw === true &&
+    Number.isInteger(options.baoPayerIndex) &&
+    options.baoPayerIndex !== winnerIndex &&
+    newState.players[options.baoPayerIndex] !== undefined;
 
   if (winType === 'self-drawn') {
-    // All 3 losers pay the winner
-    newState.players.forEach((player, index) => {
-      if (index === winnerIndex) {
-        player.score += points * 3;
-        changes.push({ playerIndex: index, change: points * 3 });
-      } else {
-        player.score -= points;
-        changes.push({ playerIndex: index, change: -points });
-      }
-    });
+    if (baoSelfDraw) {
+      // Bao self-draw: one liable player pays all three losing shares.
+      const totalPoints = points * 3;
+      newState.players[winnerIndex].score += totalPoints;
+      newState.players[options.baoPayerIndex].score -= totalPoints;
+      changes.push({ playerIndex: winnerIndex, change: totalPoints });
+      changes.push({ playerIndex: options.baoPayerIndex, change: -totalPoints });
+    } else {
+      // All 3 losers pay the winner
+      newState.players.forEach((player, index) => {
+        if (index === winnerIndex) {
+          player.score += points * 3;
+          changes.push({ playerIndex: index, change: points * 3 });
+        } else {
+          player.score -= points;
+          changes.push({ playerIndex: index, change: -points });
+        }
+      });
+    }
   } else {
     // Discard win
     if (newState.scoringVariation === 'half') {
@@ -126,7 +148,7 @@ export function processWin(
   }
 
   // Record history
-  newState.history.push({
+  const historyEntry = {
     game: newState.roundNumber,
     winner: newState.players[winnerIndex].name,
     winType,
@@ -138,7 +160,14 @@ export function processWin(
       name: newState.players[c.playerIndex].name,
       change: c.change,
     })),
-  });
+  };
+
+  if (baoSelfDraw) {
+    historyEntry.baoSelfDraw = true;
+    historyEntry.baoPayer = newState.players[options.baoPayerIndex].name;
+  }
+
+  newState.history.push(historyEntry);
 
   // Handle dealer rotation - dealer stays if they win
   if (winnerIndex !== newState.dealerIndex) {

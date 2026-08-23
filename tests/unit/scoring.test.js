@@ -85,6 +85,76 @@ describe('scoring', () => {
         expect(getTotalScores(newState)).toBe(0);
       }
     });
+
+    test('bao self-draw makes the bao payer pay all three shares at 7 faan', () => {
+      const state = createInitialGameState(['Alice', 'Bob', 'Carol', 'Dave']);
+      const points = faanToPoints(7, 'self-drawn'); // 64 points
+      const { newState } = processWin(
+        state,
+        0,
+        'self-drawn',
+        null,
+        points,
+        7,
+        { baoSelfDraw: true, baoPayerIndex: 2 }
+      );
+
+      expect(newState.players[0].score).toBe(192); // +64 * 3
+      expect(newState.players[1].score).toBe(0);
+      expect(newState.players[2].score).toBe(-192); // -64 * 3
+      expect(newState.players[3].score).toBe(0);
+      expect(newState.history[0].baoSelfDraw).toBe(true);
+      expect(newState.history[0].baoPayer).toBe('Carol');
+      expect(newState.history[0].changes).toEqual([
+        { name: 'Alice', change: 192 },
+        { name: 'Carol', change: -192 },
+      ]);
+      expect(getTotalScores(newState)).toBe(0);
+    });
+
+    test('bao self-draw option is ignored below 7 faan', () => {
+      const state = createInitialGameState(['Alice', 'Bob', 'Carol', 'Dave']);
+      const points = faanToPoints(6, 'self-drawn'); // 48 points
+      const { newState } = processWin(
+        state,
+        0,
+        'self-drawn',
+        null,
+        points,
+        6,
+        { baoSelfDraw: true, baoPayerIndex: 2 }
+      );
+
+      expect(newState.players[0].score).toBe(144); // +48 * 3
+      expect(newState.players[1].score).toBe(-48);
+      expect(newState.players[2].score).toBe(-48);
+      expect(newState.players[3].score).toBe(-48);
+      expect(newState.history[0].baoSelfDraw).toBeUndefined();
+      expect(newState.history[0].baoPayer).toBeUndefined();
+      expect(getTotalScores(newState)).toBe(0);
+    });
+
+    test('bao self-draw option is ignored for an invalid bao payer', () => {
+      const state = createInitialGameState(['Alice', 'Bob', 'Carol', 'Dave']);
+      const points = faanToPoints(7, 'self-drawn'); // 64 points
+      const { newState } = processWin(
+        state,
+        0,
+        'self-drawn',
+        null,
+        points,
+        7,
+        { baoSelfDraw: true, baoPayerIndex: 99 }
+      );
+
+      expect(newState.players[0].score).toBe(192); // +64 * 3
+      expect(newState.players[1].score).toBe(-64);
+      expect(newState.players[2].score).toBe(-64);
+      expect(newState.players[3].score).toBe(-64);
+      expect(newState.history[0].baoSelfDraw).toBeUndefined();
+      expect(newState.history[0].baoPayer).toBeUndefined();
+      expect(getTotalScores(newState)).toBe(0);
+    });
   });
 
   describe('discard wins - full gun', () => {

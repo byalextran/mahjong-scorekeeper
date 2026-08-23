@@ -21,3 +21,4 @@ export const FAAN_TABLE = {
 };
 
 export const MAX_FAAN = Math.max(...Object.keys(FAAN_TABLE).map(Number));
+export const BAO_SELF_DRAW_MIN_FAAN = 7;

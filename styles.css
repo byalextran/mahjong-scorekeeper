@@ -687,6 +687,12 @@ header h1 {
     font-size: 0.85rem;
 }
 
+.history-meta {
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+}
+
 .history-change {
     display: flex;
     justify-content: space-between;

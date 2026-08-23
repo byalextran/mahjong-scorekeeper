@@ -1,4 +1,11 @@
-import { STORAGE_KEY, STARTING_SCORE, WINDS, WIND_CHARS, FAAN_TABLE, MAX_FAAN } from './src/constants.js';
+import {
+  STORAGE_KEY,
+  STARTING_SCORE,
+  WINDS,
+  WIND_CHARS,
+  MAX_FAAN,
+  BAO_SELF_DRAW_MIN_FAAN
+} from './src/constants.js';
 import { faanToPoints, processWin, processTie } from './src/gameLogic.js';
 import { APP_VERSION, CHANGELOG } from './version.js';
 
@@ -27,6 +34,10 @@ const discarderSelect = document.getElementById('discarder-select');
 const pointsGroup = document.getElementById('points-group');
 const pointsInput = document.getElementById('points-input');
 const faanError = document.getElementById('faan-error');
+const baoSelfDrawGroup = document.getElementById('bao-self-draw-group');
+const baoSelfDrawCheckbox = document.getElementById('bao-self-draw-checkbox');
+const baoPayerGroup = document.getElementById('bao-payer-group');
+const baoPayerSelect = document.getElementById('bao-payer-select');
 const historyList = document.getElementById('history-list');
 
 // Initialize
@@ -83,6 +94,8 @@ function setupEventListeners() {
   document.querySelectorAll('input[name="win-type"]').forEach(radio => {
     radio.addEventListener('change', handleWinTypeChange);
   });
+  pointsInput.addEventListener('input', updateBaoSelfDrawControls);
+  baoSelfDrawCheckbox.addEventListener('change', updateBaoPayerVisibility);
 
   // History modal
   document.getElementById('close-history-btn').addEventListener('click', closeHistoryModal);
@@ -289,6 +302,10 @@ function openGameModal() {
   winTypeGroup.classList.add('hidden');
   discarderGroup.classList.add('hidden');
   pointsGroup.classList.add('hidden');
+  baoSelfDrawGroup.classList.add('hidden');
+  baoPayerGroup.classList.add('hidden');
+  baoSelfDrawCheckbox.checked = false;
+  baoPayerSelect.value = '';
   pointsInput.value = '';
   faanError.classList.add('hidden');
   document.querySelector('input[name="win-type"][value="self-drawn"]').checked = true;
@@ -307,6 +324,7 @@ function handleWinnerChange() {
     winTypeGroup.classList.add('hidden');
     discarderGroup.classList.add('hidden');
     pointsGroup.classList.add('hidden');
+    clearBaoSelfDrawControls();
   } else {
     winTypeGroup.classList.remove('hidden');
     pointsGroup.classList.remove('hidden');
@@ -319,17 +337,68 @@ function handleWinTypeChange() {
   const winnerIndex = parseInt(winnerSelect.value);
 
   if (winType === 'discard') {
-    // Populate discarder select (exclude winner)
-    discarderSelect.innerHTML = '<option value="">-- Select Discarder --</option>';
-    gameState.players.forEach((player, index) => {
-      if (index !== winnerIndex) {
-        discarderSelect.innerHTML += `<option value="${index}">${player.name}</option>`;
-      }
-    });
+    populatePlayerSelect(discarderSelect, '-- Select Discarder --', winnerIndex);
     discarderGroup.classList.remove('hidden');
   } else {
     discarderGroup.classList.add('hidden');
   }
+  updateBaoSelfDrawControls();
+}
+
+function clearBaoSelfDrawControls() {
+  baoSelfDrawGroup.classList.add('hidden');
+  baoPayerGroup.classList.add('hidden');
+  baoSelfDrawCheckbox.checked = false;
+  baoPayerSelect.value = '';
+}
+
+function isBaoSelfDrawEligible() {
+  const winner = winnerSelect.value;
+  const winType = document.querySelector('input[name="win-type"]:checked').value;
+  const faans = parseInt(pointsInput.value);
+
+  return (
+    winner !== '' &&
+    winner !== 'tie' &&
+    winType === 'self-drawn' &&
+    !isNaN(faans) &&
+    faans >= BAO_SELF_DRAW_MIN_FAAN
+  );
+}
+
+function populateBaoPayerSelect() {
+  const winnerIndex = parseInt(winnerSelect.value);
+  populatePlayerSelect(baoPayerSelect, '-- Select Bao Payer --', winnerIndex);
+}
+
+function populatePlayerSelect(selectElement, placeholder, excludedPlayerIndex) {
+  selectElement.innerHTML = `<option value="">${placeholder}</option>`;
+  gameState.players.forEach((player, index) => {
+    if (index !== excludedPlayerIndex) {
+      selectElement.innerHTML += `<option value="${index}">${player.name}</option>`;
+    }
+  });
+}
+
+function updateBaoSelfDrawControls() {
+  if (!isBaoSelfDrawEligible()) {
+    clearBaoSelfDrawControls();
+    return;
+  }
+
+  populateBaoPayerSelect();
+  baoSelfDrawGroup.classList.remove('hidden');
+  updateBaoPayerVisibility();
+}
+
+function updateBaoPayerVisibility() {
+  if (!isBaoSelfDrawEligible() || !baoSelfDrawCheckbox.checked) {
+    baoPayerGroup.classList.add('hidden');
+    baoPayerSelect.value = '';
+    return;
+  }
+
+  baoPayerGroup.classList.remove('hidden');
 }
 
 function submitGame() {
@@ -372,12 +441,31 @@ function submitGame() {
     discarderIndex = parseInt(discarder);
   }
 
-  handleWin(winnerIndex, winType, discarderIndex, points, faans);
+  const options = {};
+  if (isBaoSelfDrawEligible() && baoSelfDrawCheckbox.checked) {
+    const baoPayer = baoPayerSelect.value;
+    if (baoPayer === '') {
+      alert('Please select the bao payer.');
+      return;
+    }
+    options.baoSelfDraw = true;
+    options.baoPayerIndex = parseInt(baoPayer);
+  }
+
+  handleWin(winnerIndex, winType, discarderIndex, points, faans, options);
   closeGameModal();
 }
 
-function handleWin(winnerIndex, winType, discarderIndex, points, faans) {
-  const result = processWin(gameState, winnerIndex, winType, discarderIndex, points, faans);
+function handleWin(winnerIndex, winType, discarderIndex, points, faans, options = {}) {
+  const result = processWin(
+    gameState,
+    winnerIndex,
+    winType,
+    discarderIndex,
+    points,
+    faans,
+    options
+  );
   gameState = result.newState;
   saveToLocalStorage();
   renderUI();
@@ -410,12 +498,17 @@ function openHistoryModal() {
         if (allZero) {
           bodyContent = '<div class="tie-text" style="font-size: 0.85rem;">No score changes</div>';
         } else {
+          const baoPayerHtml = h.baoPayer
+            ? `<div class="history-meta">Bao payer: ${h.baoPayer}</div>`
+            : '';
           const changesHtml = h.changes.map(c => {
             const cls = c.change > 0 ? 'change-positive' : 'change-negative';
             const sign = c.change > 0 ? '+' : '';
             return `<div class="history-change"><span>${c.name}</span><span class="${cls}">${sign}${c.change}</span></div>`;
           }).join('');
-          bodyContent = changesHtml ? `<div class="history-changes">${changesHtml}</div>` : '';
+          bodyContent = changesHtml
+            ? `${baoPayerHtml}<div class="history-changes">${changesHtml}</div>`
+            : baoPayerHtml;
         }
       }
 
