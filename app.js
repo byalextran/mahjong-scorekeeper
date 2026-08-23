@@ -498,17 +498,15 @@ function openHistoryModal() {
         if (allZero) {
           bodyContent = '<div class="tie-text" style="font-size: 0.85rem;">No score changes</div>';
         } else {
-          const baoPayerHtml = h.baoPayer
-            ? `<div class="history-meta">Bao payer: ${h.baoPayer}</div>`
-            : '';
           const changesHtml = h.changes.map(c => {
             const cls = c.change > 0 ? 'change-positive' : 'change-negative';
             const sign = c.change > 0 ? '+' : '';
-            return `<div class="history-change"><span>${c.name}</span><span class="${cls}">${sign}${c.change}</span></div>`;
+            const baoPayerLabel = h.baoPayer === c.name
+              ? '<span class="history-meta">bao payer</span>'
+              : '';
+            return `<div class="history-change"><span>${c.name}${baoPayerLabel}</span><span class="${cls}">${sign}${c.change}</span></div>`;
           }).join('');
-          bodyContent = changesHtml
-            ? `${baoPayerHtml}<div class="history-changes">${changesHtml}</div>`
-            : baoPayerHtml;
+          bodyContent = changesHtml ? `<div class="history-changes">${changesHtml}</div>` : '';
         }
       }
 
