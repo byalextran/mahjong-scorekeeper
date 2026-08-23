@@ -78,6 +78,14 @@ Follow the link/instructions to authenticate.
 npm install
 ```
 
+### Start Local Server
+
+```bash
+npm run start
+```
+
+Open <http://localhost:8000> in your browser.
+
 ### Deploy to Cloudflare
 
 ```bash

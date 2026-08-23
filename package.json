@@ -5,6 +5,7 @@
   "scripts": {
     "build": "node build.cjs",
     "deploy": "node build.cjs && npx wrangler pages deploy",
+    "start": "python3 -m http.server 8000",
     "test": "vitest",
     "test:run": "vitest run"
   },
