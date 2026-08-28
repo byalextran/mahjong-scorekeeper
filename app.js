@@ -4,7 +4,8 @@ import {
   WINDS,
   WIND_CHARS,
   MAX_FAAN,
-  BAO_SELF_DRAW_MIN_FAAN
+  BAO_SELF_DRAW_MIN_FAAN,
+  TIE_DEALER_RULES
 } from './src/constants.js';
 import { faanToPoints, processWin, processTie } from './src/gameLogic.js';
 import { APP_VERSION, CHANGELOG } from './version.js';
@@ -136,6 +137,10 @@ function loadFromLocalStorage() {
     if (!gameState.scoringVariation) {
       gameState.scoringVariation = 'full';
     }
+    if (!gameState.tieDealerRule) {
+      gameState.tieDealerRule = TIE_DEALER_RULES.ADVANCE;
+      saveToLocalStorage();
+    }
     showGameScreen();
     renderUI();
   }
@@ -181,6 +186,7 @@ function startGame() {
   }
 
   const scoringVariation = document.querySelector('input[name="scoring-variation"]:checked').value;
+  const tieDealerRule = document.querySelector('input[name="tie-dealer-rule"]:checked').value;
 
   gameState = {
     players: names.map(name => ({ name, score: STARTING_SCORE })),
@@ -190,7 +196,8 @@ function startGame() {
     prevailingWind: 0,
     dealerRotations: 0,
     history: [],
-    scoringVariation
+    scoringVariation,
+    tieDealerRule
   };
 
   saveToLocalStorage();

@@ -3,6 +3,7 @@ import {
   STARTING_SCORE,
   MAX_FAAN,
   BAO_SELF_DRAW_MIN_FAAN,
+  TIE_DEALER_RULES,
 } from './constants.js';
 
 /**
@@ -47,6 +48,7 @@ export function createInitialGameState(playerNames, scoringVariation = 'full') {
     dealerRotations: 0,
     history: [],
     scoringVariation,
+    tieDealerRule: TIE_DEALER_RULES.ADVANCE,
   };
 }
 
@@ -189,6 +191,9 @@ export function processWin(
 export function processTie(gameState) {
   // Deep clone state
   const newState = JSON.parse(JSON.stringify(gameState));
+  if (!newState.tieDealerRule) {
+    newState.tieDealerRule = TIE_DEALER_RULES.ADVANCE;
+  }
 
   // Record history
   newState.history.push({
@@ -200,11 +205,12 @@ export function processTie(gameState) {
     changes: [],
   });
 
-  // Dealer rotates on tie
-  const rotatedState = rotateDealer(newState);
-  newState.dealerIndex = rotatedState.dealerIndex;
-  newState.dealerRotations = rotatedState.dealerRotations;
-  newState.prevailingWind = rotatedState.prevailingWind;
+  if (newState.tieDealerRule === TIE_DEALER_RULES.ADVANCE) {
+    const rotatedState = rotateDealer(newState);
+    newState.dealerIndex = rotatedState.dealerIndex;
+    newState.dealerRotations = rotatedState.dealerRotations;
+    newState.prevailingWind = rotatedState.prevailingWind;
+  }
 
   newState.roundNumber++;
   return newState;

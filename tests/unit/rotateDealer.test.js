@@ -1,4 +1,5 @@
 import { describe, test, expect } from 'vitest';
+import { TIE_DEALER_RULES } from '../../src/constants.js';
 import {
   rotateDealer,
   createInitialGameState,
@@ -157,29 +158,69 @@ describe('dealer rotation on win/tie', () => {
     });
   });
 
-  describe('tie - dealer rotates', () => {
-    test('dealer rotates when tie occurs', () => {
+  describe('tie - dealer rule', () => {
+    test('dealer rotates when tie occurs with missing rule', () => {
       const initialState = createInitialGameState([
         'Alice',
         'Bob',
         'Carol',
         'Dave',
       ]);
+      delete initialState.tieDealerRule;
       const newState = processTie(initialState);
 
       expect(newState.dealerIndex).toBe(1);
+      expect(newState.dealerRotations).toBe(1);
     });
 
-    test('dealerRotations increments on tie', () => {
+    test('dealer rotates when tie occurs with advance rule', () => {
       const initialState = createInitialGameState([
         'Alice',
         'Bob',
         'Carol',
         'Dave',
       ]);
+      initialState.tieDealerRule = TIE_DEALER_RULES.ADVANCE;
       const newState = processTie(initialState);
 
+      expect(newState.dealerIndex).toBe(1);
       expect(newState.dealerRotations).toBe(1);
+    });
+
+    test('dealer stays when tie occurs with stay rule', () => {
+      const initialState = createInitialGameState([
+        'Alice',
+        'Bob',
+        'Carol',
+        'Dave',
+      ]);
+      initialState.tieDealerRule = TIE_DEALER_RULES.STAY;
+      initialState.dealerIndex = 2;
+      initialState.dealerRotations = 3;
+      initialState.prevailingWind = 1;
+
+      const newState = processTie(initialState);
+
+      expect(newState.roundNumber).toBe(2);
+      expect(newState.history).toEqual([
+        {
+          game: 1,
+          winner: null,
+          winType: 'tie',
+          discarder: null,
+          points: 0,
+          changes: [],
+        },
+      ]);
+      expect(newState.players.map((player) => player.score)).toEqual([
+        0,
+        0,
+        0,
+        0,
+      ]);
+      expect(newState.dealerIndex).toBe(2);
+      expect(newState.dealerRotations).toBe(3);
+      expect(newState.prevailingWind).toBe(1);
     });
   });
 
