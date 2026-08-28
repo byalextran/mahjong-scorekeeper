@@ -3,7 +3,6 @@ import {
   STARTING_SCORE,
   MAX_FAAN,
   BAO_SELF_DRAW_MIN_FAAN,
-  TIE_DEALER_POLICIES,
 } from './constants.js';
 
 /**
@@ -36,14 +35,9 @@ export function getSeatWind(playerIndex, dealerIndex) {
  * Create initial game state
  * @param {string[]} playerNames - Array of 4 player names
  * @param {string} scoringVariation - 'full' or 'half'
- * @param {string} tieDealerPolicy - 'advance' or 'keep'
  * @returns {object} Initial game state
  */
-export function createInitialGameState(
-  playerNames,
-  scoringVariation = 'full',
-  tieDealerPolicy = TIE_DEALER_POLICIES.ADVANCE
-) {
+export function createInitialGameState(playerNames, scoringVariation = 'full') {
   return {
     players: playerNames.map((name) => ({ name, score: STARTING_SCORE })),
     dealerIndex: 0,
@@ -53,7 +47,6 @@ export function createInitialGameState(
     dealerRotations: 0,
     history: [],
     scoringVariation,
-    tieDealerPolicy,
   };
 }
 
@@ -207,12 +200,11 @@ export function processTie(gameState) {
     changes: [],
   });
 
-  if (newState.tieDealerPolicy !== TIE_DEALER_POLICIES.KEEP) {
-    const rotatedState = rotateDealer(newState);
-    newState.dealerIndex = rotatedState.dealerIndex;
-    newState.dealerRotations = rotatedState.dealerRotations;
-    newState.prevailingWind = rotatedState.prevailingWind;
-  }
+  // Dealer rotates on tie
+  const rotatedState = rotateDealer(newState);
+  newState.dealerIndex = rotatedState.dealerIndex;
+  newState.dealerRotations = rotatedState.dealerRotations;
+  newState.prevailingWind = rotatedState.prevailingWind;
 
   newState.roundNumber++;
   return newState;

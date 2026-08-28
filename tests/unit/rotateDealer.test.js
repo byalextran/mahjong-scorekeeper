@@ -1,5 +1,4 @@
 import { describe, test, expect } from 'vitest';
-import { TIE_DEALER_POLICIES } from '../../src/constants.js';
 import {
   rotateDealer,
   createInitialGameState,
@@ -181,22 +180,6 @@ describe('dealer rotation on win/tie', () => {
       const newState = processTie(initialState);
 
       expect(newState.dealerRotations).toBe(1);
-    });
-  });
-
-  describe('tie - dealer stays', () => {
-    test('dealer remains dealer when tie dealer policy is keep', () => {
-      const initialState = createInitialGameState(
-        ['Alice', 'Bob', 'Carol', 'Dave'],
-        'full',
-        TIE_DEALER_POLICIES.KEEP
-      );
-      const newState = processTie(initialState);
-
-      expect(newState.dealerIndex).toBe(0);
-      expect(newState.dealerRotations).toBe(0);
-      expect(newState.prevailingWind).toBe(0);
-      expect(newState.roundNumber).toBe(2);
     });
   });
 
