@@ -24,7 +24,10 @@ A discard-win payment variation where the discarder pays half of the discard poi
 _Avoid_: Half Gun
 
 **Dealer Rotation**:
-The app's table-state rule where the dealer stays after winning and advances after a non-dealer win or tie. After each player has become dealer within a prevailing wind, the prevailing wind advances.
+The table-state progression where the dealer advances to the next player. After each player has become dealer within a prevailing wind, the prevailing wind advances.
+
+**Tie Dealer Rule**:
+The table-selected rule for whether the dealer advances or stays after a tie hand.
 
 **Bao**:
 A liability rule where one player is responsible for paying the winner on behalf of multiple players.
