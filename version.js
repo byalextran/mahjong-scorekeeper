@@ -1,6 +1,13 @@
-export const APP_VERSION = '2.1.0';
+export const APP_VERSION = '2.2.0';
 
 export const CHANGELOG = [
+  {
+    version: '2.2.0',
+    changes: [
+      'Added option for dealer rotation on ties.',
+      'Added scoring rule for bao self-draw.'
+    ]
+  },
   {
     version: '2.1.0',
     changes: [
