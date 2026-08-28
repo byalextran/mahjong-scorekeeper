@@ -214,32 +214,37 @@ header h1 {
     width: 180px;
 }
 
-/* Scoring Variation Selector */
-.scoring-variation-group {
+/* Setup Rule Selectors */
+.scoring-variation-group,
+.setup-rule-group {
     background: var(--color-bg-body);
     padding: 16px 20px;
     margin-top: 16px;
     text-align: center;
 }
 
-.scoring-variation-group.form-group .form-label {
+.scoring-variation-group.form-group .form-label,
+.setup-rule-group.form-group .form-label {
     font-size: 1.15rem;
     font-weight: 600;
     color: var(--color-text-secondary);
     margin-bottom: 16px;
 }
 
-.scoring-variation-group .radio-group {
+.scoring-variation-group .radio-group,
+.setup-rule-group .radio-group {
     justify-content: center;
     gap: 24px;
 }
 
-.scoring-variation-group .radio-label {
+.scoring-variation-group .radio-label,
+.setup-rule-group .radio-label {
     font-size: 1.1rem;
     gap: 8px;
 }
 
-.scoring-variation-group .radio-label input[type="radio"] {
+.scoring-variation-group .radio-label input[type="radio"],
+.setup-rule-group .radio-label input[type="radio"] {
     width: 18px;
     height: 18px;
 }
@@ -927,17 +932,20 @@ header h1 {
         display: inline;
     }
 
-    /* Scoring variation on mobile */
-    .scoring-variation-group {
+    /* Setup rules on mobile */
+    .scoring-variation-group,
+    .setup-rule-group {
         padding: 0 16px;
     }
 
-    .scoring-variation-group.form-group .form-label {
+    .scoring-variation-group.form-group .form-label,
+    .setup-rule-group.form-group .form-label {
         font-size: 0.9rem;
         margin-bottom: 10px;
     }
 
-    .scoring-variation-group .radio-label {
+    .scoring-variation-group .radio-label,
+    .setup-rule-group .radio-label {
         font-size: 1rem;
     }
 }

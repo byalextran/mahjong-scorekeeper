@@ -1,12 +1,17 @@
 import {
   STORAGE_KEY,
-  STARTING_SCORE,
   WINDS,
   WIND_CHARS,
   MAX_FAAN,
-  BAO_SELF_DRAW_MIN_FAAN
+  BAO_SELF_DRAW_MIN_FAAN,
+  TIE_DEALER_POLICIES
 } from './src/constants.js';
-import { faanToPoints, processWin, processTie } from './src/gameLogic.js';
+import {
+  createInitialGameState,
+  faanToPoints,
+  processWin,
+  processTie
+} from './src/gameLogic.js';
 import { APP_VERSION, CHANGELOG } from './version.js';
 
 let gameState = null;
@@ -44,7 +49,7 @@ const historyList = document.getElementById('history-list');
 document.addEventListener('DOMContentLoaded', () => {
   loadFromLocalStorage();
   setupEventListeners();
-});
+}, { once: true });
 
 function setupEventListeners() {
   // Setup screen
@@ -136,6 +141,9 @@ function loadFromLocalStorage() {
     if (!gameState.scoringVariation) {
       gameState.scoringVariation = 'full';
     }
+    if (!gameState.tieDealerPolicy) {
+      gameState.tieDealerPolicy = TIE_DEALER_POLICIES.ADVANCE;
+    }
     showGameScreen();
     renderUI();
   }
@@ -181,17 +189,9 @@ function startGame() {
   }
 
   const scoringVariation = document.querySelector('input[name="scoring-variation"]:checked').value;
+  const tieDealerPolicy = document.querySelector('input[name="tie-dealer-policy"]:checked').value;
 
-  gameState = {
-    players: names.map(name => ({ name, score: STARTING_SCORE })),
-    dealerIndex: 0,
-    startingDealerIndex: 0,
-    roundNumber: 1,
-    prevailingWind: 0,
-    dealerRotations: 0,
-    history: [],
-    scoringVariation
-  };
+  gameState = createInitialGameState(names, scoringVariation, tieDealerPolicy);
 
   saveToLocalStorage();
   showGameScreen();
@@ -547,6 +547,9 @@ function confirmReset() {
   for (let i = 0; i < 4; i++) {
     document.getElementById(`player-${i}`).value = '';
   }
+  document.querySelector(
+    `input[name="tie-dealer-policy"][value="${TIE_DEALER_POLICIES.ADVANCE}"]`
+  ).checked = true;
   updateRandomizeButtonState();
 
   setupScreen.classList.remove('hidden');

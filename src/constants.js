@@ -2,6 +2,10 @@ export const STORAGE_KEY = 'mahjong_game';
 export const STARTING_SCORE = 0;
 export const WINDS = ['East', 'South', 'West', 'North'];
 export const WIND_CHARS = ['東', '南', '西', '北'];
+export const TIE_DEALER_POLICIES = {
+  ADVANCE: 'advance',
+  KEEP: 'keep',
+};
 
 // Faan to points conversion table [faan]: [selfDraw, discard]
 export const FAAN_TABLE = {
